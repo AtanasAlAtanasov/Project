@@ -21,6 +21,7 @@
 		A0CFA5631819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
 		A0CFA56B1819783800EAB2F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0CFA5691819783800EAB2F6 /* InfoPlist.strings */; };
 		A0CFA56D1819783800EAB2F6 /* Sofia_TrasportTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */; };
+		A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5761819800800EAB2F6 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		A0CFA5681819783800EAB2F6 /* Sofia_TrasportTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia_TrasportTests-Info.plist"; sourceTree = "<group>"; };
 		A0CFA56A1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sofia_TrasportTests.m; sourceTree = "<group>"; };
+		A0CFA5761819800800EAB2F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			files = (
 				A0CFA5441819783800EAB2F6 /* CoreGraphics.framework in Frameworks */,
 				A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */,
+				A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */,
 				A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,6 +104,7 @@
 		A0CFA5401819783800EAB2F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0CFA5761819800800EAB2F6 /* MapKit.framework */,
 				A0CFA5411819783800EAB2F6 /* Foundation.framework */,
 				A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */,
 				A0CFA5451819783800EAB2F6 /* UIKit.framework */,
