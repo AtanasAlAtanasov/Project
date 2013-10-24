@@ -22,6 +22,12 @@
 		A0CFA56B1819783800EAB2F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0CFA5691819783800EAB2F6 /* InfoPlist.strings */; };
 		A0CFA56D1819783800EAB2F6 /* Sofia_TrasportTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */; };
 		A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5761819800800EAB2F6 /* MapKit.framework */; };
+		A0CFA57B1819965100EAB2F6 /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA57A1819965100EAB2F6 /* Tutorial.m */; };
+		A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA57D1819966900EAB2F6 /* Contributor.m */; };
+		A0CFA5861819970A00EAB2F6 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA5811819970A00EAB2F6 /* TFHpple.m */; };
+		A0CFA5871819970A00EAB2F6 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA5831819970A00EAB2F6 /* TFHppleElement.m */; };
+		A0CFA5881819970A00EAB2F6 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA5851819970A00EAB2F6 /* XPathQuery.m */; };
+		A0CFA58A181997B100EAB2F6 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA589181997B100EAB2F6 /* libxml2.2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,17 @@
 		A0CFA56A1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sofia_TrasportTests.m; sourceTree = "<group>"; };
 		A0CFA5761819800800EAB2F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A0CFA5791819965100EAB2F6 /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
+		A0CFA57A1819965100EAB2F6 /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
+		A0CFA57C1819966900EAB2F6 /* Contributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contributor.h; sourceTree = "<group>"; };
+		A0CFA57D1819966900EAB2F6 /* Contributor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contributor.m; sourceTree = "<group>"; };
+		A0CFA5801819970A00EAB2F6 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		A0CFA5811819970A00EAB2F6 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		A0CFA5821819970A00EAB2F6 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		A0CFA5831819970A00EAB2F6 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		A0CFA5841819970A00EAB2F6 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		A0CFA5851819970A00EAB2F6 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		A0CFA589181997B100EAB2F6 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0CFA58A181997B100EAB2F6 /* libxml2.2.dylib in Frameworks */,
 				A0CFA5441819783800EAB2F6 /* CoreGraphics.framework in Frameworks */,
 				A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */,
 				A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */,
@@ -104,6 +122,7 @@
 		A0CFA5401819783800EAB2F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0CFA589181997B100EAB2F6 /* libxml2.2.dylib */,
 				A0CFA5761819800800EAB2F6 /* MapKit.framework */,
 				A0CFA5411819783800EAB2F6 /* Foundation.framework */,
 				A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */,
@@ -116,6 +135,8 @@
 		A0CFA5471819783800EAB2F6 /* Sofia_Trasport */ = {
 			isa = PBXGroup;
 			children = (
+				A0CFA57F181996F200EAB2F6 /* Hpple */,
+				A0CFA578181994B300EAB2F6 /* Model */,
 				A0CFA5501819783800EAB2F6 /* AppDelegate.h */,
 				A0CFA5511819783800EAB2F6 /* AppDelegate.m */,
 				A0CFA5531819783800EAB2F6 /* Main.storyboard */,
@@ -154,6 +175,30 @@
 				A0CFA5691819783800EAB2F6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A0CFA578181994B300EAB2F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A0CFA5791819965100EAB2F6 /* Tutorial.h */,
+				A0CFA57A1819965100EAB2F6 /* Tutorial.m */,
+				A0CFA57C1819966900EAB2F6 /* Contributor.h */,
+				A0CFA57D1819966900EAB2F6 /* Contributor.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A0CFA57F181996F200EAB2F6 /* Hpple */ = {
+			isa = PBXGroup;
+			children = (
+				A0CFA5801819970A00EAB2F6 /* TFHpple.h */,
+				A0CFA5811819970A00EAB2F6 /* TFHpple.m */,
+				A0CFA5821819970A00EAB2F6 /* TFHppleElement.h */,
+				A0CFA5831819970A00EAB2F6 /* TFHppleElement.m */,
+				A0CFA5841819970A00EAB2F6 /* XPathQuery.h */,
+				A0CFA5851819970A00EAB2F6 /* XPathQuery.m */,
+			);
+			name = Hpple;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +299,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0CFA5581819783800EAB2F6 /* ViewController.m in Sources */,
+				A0CFA5871819970A00EAB2F6 /* TFHppleElement.m in Sources */,
+				A0CFA5881819970A00EAB2F6 /* XPathQuery.m in Sources */,
+				A0CFA5861819970A00EAB2F6 /* TFHpple.m in Sources */,
+				A0CFA57B1819965100EAB2F6 /* Tutorial.m in Sources */,
+				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
 				A0CFA54E1819783800EAB2F6 /* main.m in Sources */,
 			);
@@ -338,6 +388,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -371,6 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
