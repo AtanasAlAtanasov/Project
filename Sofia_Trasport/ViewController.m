@@ -10,6 +10,7 @@
 #import "TFHpple.h"
 #import "Tutorial.h"
 #import "Contributor.h"
+#import "PinClass.h"
 
 @interface ViewController ()
 
@@ -20,6 +21,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    MKCoordinateRegion region;
+    //region.center.latitude = _latitude;
+    //region.center.longitude = _longitude;
+    region.span.latitudeDelta = 0.01f;
+    region.span.longitudeDelta = 0.01f;
+    [mapView setRegion:region animated:YES];
+    
+    PinClass *ann = [[PinClass alloc] init];
+    ann.coordinate = region.center;
+    [mapView addAnnotation:ann];
 	
     mapView.showsUserLocation = YES;
     [self loadStops];
@@ -56,7 +67,7 @@
         NSLog(@"3 %@",transportStop.title);
         
         // 7
-        //transportStop.url = [element objectForKey:@"atv"];
+        //transportStop.url = [[element attributes] objectForKey:@"atv"];
         //NSLog(@"4 %@",transportStop.url);
         
 

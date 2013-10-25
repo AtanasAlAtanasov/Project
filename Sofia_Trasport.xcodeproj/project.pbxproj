@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A05788AD181A75D100955FEE /* PinClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A05788AC181A75D100955FEE /* PinClass.m */; };
 		A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5411819783800EAB2F6 /* Foundation.framework */; };
 		A0CFA5441819783800EAB2F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */; };
 		A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A05788AB181A75D100955FEE /* PinClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinClass.h; sourceTree = "<group>"; };
+		A05788AC181A75D100955FEE /* PinClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinClass.m; sourceTree = "<group>"; };
 		A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sofia_Trasport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5411819783800EAB2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -135,6 +138,8 @@
 		A0CFA5471819783800EAB2F6 /* Sofia_Trasport */ = {
 			isa = PBXGroup;
 			children = (
+				A05788AB181A75D100955FEE /* PinClass.h */,
+				A05788AC181A75D100955FEE /* PinClass.m */,
 				A0CFA57F181996F200EAB2F6 /* Hpple */,
 				A0CFA578181994B300EAB2F6 /* Model */,
 				A0CFA5501819783800EAB2F6 /* AppDelegate.h */,
@@ -303,6 +308,7 @@
 				A0CFA5881819970A00EAB2F6 /* XPathQuery.m in Sources */,
 				A0CFA5861819970A00EAB2F6 /* TFHpple.m in Sources */,
 				A0CFA57B1819965100EAB2F6 /* Tutorial.m in Sources */,
+				A05788AD181A75D100955FEE /* PinClass.m in Sources */,
 				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
 				A0CFA54E1819783800EAB2F6 /* main.m in Sources */,
@@ -516,6 +522,7 @@
 				A0CFA5721819783800EAB2F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0CFA5731819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia_TrasportTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +531,7 @@
 				A0CFA5751819783800EAB2F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
