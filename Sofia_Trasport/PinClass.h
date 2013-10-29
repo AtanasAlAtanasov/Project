@@ -10,9 +10,15 @@
 #import <MapKit/MKAnnotation.h>
 #import <MapKit/MKPinAnnotationView.h>
 
-@interface PinClass : NSObject <MKAnnotation>
+@interface PinClass : NSObject <MKAnnotation> {
 
+CLLocationCoordinate2D coordinate;
+NSString *title;
+NSString *subtitle;
+}
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic) MKPinAnnotationColor pinColor;
  
 @end

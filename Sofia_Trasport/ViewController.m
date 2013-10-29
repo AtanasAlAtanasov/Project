@@ -17,7 +17,7 @@
 @end
 
 @implementation ViewController
-@synthesize stringForParse,parseStings,stopsInfo;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView;
 
 - (void)viewDidLoad
 {
@@ -25,7 +25,9 @@
    
 	
     mapView.showsUserLocation = YES;
-    [self loadStops];
+    
+    //[self loadStops];
+    [self makePin];
 }
 
 -(void)loadStops {
@@ -34,22 +36,16 @@
     NSLog(@"1 %@",stopsUrl);
     NSData *stopsHtmlData = [NSData dataWithContentsOfURL:stopsUrl];
    
-    // 2
     TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
     
-
-    // 3
     NSString *stopsXpathQueryString = @"//*[@id='src_table_0']/tr/td";
     NSLog(@"2 %@",stopsXpathQueryString);
     NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
-    //NSLog(@"5 %@",stopsNodes);
    
     for (TFHppleElement *element in stopsNodes) {
-        // 5
+
         Tutorial *transportStop = [[Tutorial alloc] init];
-        
-        // 6
-        
+    
         transportStop.title = [[element firstChild] content];
         //NSLog(@"3 %@",transportStop.title);
         
@@ -59,13 +55,6 @@
         
         int a=0;
         a = [parseStings count];
-        
-        //NSLog(@"1 %@",parseStings);
-        
-        NSString *latitude;
-        NSString *longitude;
-        NSString *stopCode;
-        NSString *stopName;
         
         if(a == 9) {
             latitude = (NSString*) [parseStings objectAtIndex:5];
@@ -77,38 +66,39 @@
             NSLog(@"name %@",stopName);
             NSLog(@"lat %@",latitude);
             NSLog(@"long %@",longitude);
+            NSLog(@"--------------");
             
         }
-        
-        
-        // 7
-        
-        //transportStop.url = [[element attributes] objectForKey:@"atv"];
-        //NSLog(@"4 %@",transportStop.url);
-        
 
     }
-    }
+}
 
 -(void)makePin {
     
-    //double myLatitude = [latitude doubleValue];
-    //double myLongitude = [longitude doubleValue];
-    //NSLog(@"string %f",myLatitude);
-    //NSLog(@"string %f",myLongitude);
+    latitude = [NSString stringWithFormat:@"42.707318"];
+    longitude = [NSString stringWithFormat:@"23.338418"];
+    double myLatitude = [latitude doubleValue];
+    double myLongitude = [longitude doubleValue];
+    
+    NSLog(@"Long %f",myLongitude);
+    NSLog(@"Lat %f",myLatitude);
+    
     
     MKCoordinateRegion region;
-    //region.center.latitude = myLatitude;
-    //region.center.longitude = myLongitude;
+    region.center.latitude = myLatitude;
+    region.center.longitude = myLongitude;
     region.span.latitudeDelta = 0.01f;
     region.span.longitudeDelta = 0.01f;
-    //[mapView setRegion:region animated:YES];
+    [mapView setRegion:region animated:YES];
+    
     
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     //ann.subtitle =
     [mapView addAnnotation:ann];
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {

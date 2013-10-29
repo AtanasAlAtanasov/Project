@@ -8,8 +8,7 @@
 
 #import "PinClass.h"
 
-
-
 @implementation PinClass
+@synthesize coordinate,title,subtitle;
 
 @end
