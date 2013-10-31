@@ -17,6 +17,7 @@
 }
 @property (nonatomic) MKPinAnnotationView *myPinView;
 @property (nonatomic) IBOutlet MKMapView *MapContorller;
+- (IBAction)myLocation:(id)sender;
 @property (nonatomic) NSString *stringForParse;
 @property (nonatomic) NSArray *parseStings;
 @property (nonatomic) NSMutableArray *stopsInfo;

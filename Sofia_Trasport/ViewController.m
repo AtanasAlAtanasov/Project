@@ -24,23 +24,41 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
+    
 	self.MapContorller.delegate=self;
     self.MapContorller.showsUserLocation = YES;
     [self loadStops];
-    //[self makePin];
+    
+    
 }
+
+- (IBAction)myLocation:(id)sender {
+    
+    latitude = [NSString stringWithFormat:@"42.672442"];
+    longitude = [NSString stringWithFormat:@"23.297753"];
+    double myLatitude = [latitude doubleValue];
+    double myLongitude = [longitude doubleValue];
+    MKCoordinateRegion regionUser;
+    regionUser.center.latitude = myLatitude;
+    regionUser.center.longitude = myLongitude;
+    regionUser.span.latitudeDelta = 0.01f;
+    regionUser.span.longitudeDelta = 0.01f;
+    self.MapContorller.showsUserLocation = YES;
+    [self.MapContorller setRegion:regionUser animated:YES];
+    [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
+}
+
 
 -(void)loadStops {
     
     NSURL *stopsUrl = [NSURL URLWithString:@"https://code.google.com/p/sofia-public-transport-navigator/source/browse/res/raw/coordinates.xml?name=Version+1.2+-+fixed+map+key"];
-    NSLog(@"1 %@",stopsUrl);
+    //NSLog(@"1 %@",stopsUrl);
     NSData *stopsHtmlData = [NSData dataWithContentsOfURL:stopsUrl];
    
     TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
     
     NSString *stopsXpathQueryString = @"//*[@id='src_table_0']/tr/td";
-    NSLog(@"2 %@",stopsXpathQueryString);
+    //NSLog(@"2 %@",stopsXpathQueryString);
     NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
    
     for (TFHppleElement *element in stopsNodes) {
@@ -105,7 +123,7 @@
     
             myPinView.pinColor = MKPinAnnotationColorRed;
             //myPinView.animatesDrop = YES;
-            myPinView.draggable = YES;
+            //myPinView.draggable = YES;
             return myPinView;
    
 }
