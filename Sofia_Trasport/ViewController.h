@@ -8,18 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <MapKit/MKReverseGeocoder.h>
 #import <CoreLocation/CoreLocation.h>
-#import <CoreGraphics/CoreGraphics.h>
 #import <MapKit/MKPinAnnotationView.h>
 
-@interface ViewController : UIViewController {
-    
-    
-    MKMapView *mapView;
-}
+@interface ViewController : UIViewController<MKMapViewDelegate> {
 
-@property (nonatomic, retain) MKPinAnnotationView *myPinView;
-@property (weak, nonatomic) IBOutlet MKMapView *MapContorller;
+}
+@property (nonatomic) MKPinAnnotationView *myPinView;
+@property (nonatomic) IBOutlet MKMapView *MapContorller;
 @property (nonatomic) NSString *stringForParse;
 @property (nonatomic) NSArray *parseStings;
 @property (nonatomic) NSMutableArray *stopsInfo;
@@ -27,5 +24,7 @@
 @property (nonatomic) NSString *longitude;
 @property (nonatomic) NSString *stopCode;
 @property (nonatomic) NSString *stopName;
+
+-(MKPinAnnotationView *)pinChangeColor;
 
 @end

@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		A05788AD181A75D100955FEE /* PinClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A05788AC181A75D100955FEE /* PinClass.m */; };
 		A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */; };
+		A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CAACA1182168BF00ECD1E7 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5411819783800EAB2F6 /* Foundation.framework */; };
-		A0CFA5441819783800EAB2F6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */; };
 		A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
 		A0CFA54C1819783800EAB2F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0CFA54A1819783800EAB2F6 /* InfoPlist.strings */; };
 		A0CFA54E1819783800EAB2F6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA54D1819783800EAB2F6 /* main.m */; };
@@ -23,7 +23,6 @@
 		A0CFA5631819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
 		A0CFA56B1819783800EAB2F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0CFA5691819783800EAB2F6 /* InfoPlist.strings */; };
 		A0CFA56D1819783800EAB2F6 /* Sofia_TrasportTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */; };
-		A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5761819800800EAB2F6 /* MapKit.framework */; };
 		A0CFA57B1819965100EAB2F6 /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA57A1819965100EAB2F6 /* Tutorial.m */; };
 		A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA57D1819966900EAB2F6 /* Contributor.m */; };
 		A0CFA5861819970A00EAB2F6 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CFA5811819970A00EAB2F6 /* TFHpple.m */; };
@@ -46,9 +45,9 @@
 		A05788AB181A75D100955FEE /* PinClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinClass.h; sourceTree = "<group>"; };
 		A05788AC181A75D100955FEE /* PinClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinClass.m; sourceTree = "<group>"; };
 		A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A0CAACA1182168BF00ECD1E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sofia_Trasport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5411819783800EAB2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A0CFA5451819783800EAB2F6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0CFA5491819783800EAB2F6 /* Sofia_Trasport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia_Trasport-Info.plist"; sourceTree = "<group>"; };
 		A0CFA54B1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -65,7 +64,6 @@
 		A0CFA5681819783800EAB2F6 /* Sofia_TrasportTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia_TrasportTests-Info.plist"; sourceTree = "<group>"; };
 		A0CFA56A1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sofia_TrasportTests.m; sourceTree = "<group>"; };
-		A0CFA5761819800800EAB2F6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A0CFA5791819965100EAB2F6 /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		A0CFA57A1819965100EAB2F6 /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		A0CFA57C1819966900EAB2F6 /* Contributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contributor.h; sourceTree = "<group>"; };
@@ -84,11 +82,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */,
 				A0CFA58A181997B100EAB2F6 /* libxml2.2.dylib in Frameworks */,
-				A0CFA5441819783800EAB2F6 /* CoreGraphics.framework in Frameworks */,
+				A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */,
+				A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */,
 				A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */,
-				A0CFA5771819800800EAB2F6 /* MapKit.framework in Frameworks */,
 				A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,10 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				A0CFA589181997B100EAB2F6 /* libxml2.2.dylib */,
+				A0CAACA1182168BF00ECD1E7 /* MapKit.framework */,
 				A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */,
-				A0CFA5761819800800EAB2F6 /* MapKit.framework */,
 				A0CFA5411819783800EAB2F6 /* Foundation.framework */,
-				A0CFA5431819783800EAB2F6 /* CoreGraphics.framework */,
 				A0CFA5451819783800EAB2F6 /* UIKit.framework */,
 				A0CFA5601819783800EAB2F6 /* XCTest.framework */,
 			);
@@ -444,6 +440,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Volumes/Second/Xcode/Sofia_Trasport,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia_Trasport-Prefix.pch";
 				INFOPLIST_FILE = "Sofia_Trasport/Sofia_Trasport-Info.plist";
@@ -457,6 +458,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Volumes/Second/Xcode/Sofia_Trasport,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia_Trasport-Prefix.pch";
 				INFOPLIST_FILE = "Sofia_Trasport/Sofia_Trasport-Info.plist";

@@ -17,17 +17,18 @@
 @end
 
 @implementation ViewController
+
+
 @synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
    
-	
-    mapView.showsUserLocation = YES;
-    
-    //[self loadStops];
-    [self makePin];
+	self.MapContorller.delegate=self;
+    self.MapContorller.showsUserLocation = YES;
+    [self loadStops];
+    //[self makePin];
 }
 
 -(void)loadStops {
@@ -62,26 +63,27 @@
             stopCode = (NSString*) [parseStings objectAtIndex:1];
             stopName = (NSString*) [parseStings objectAtIndex:3];
             
-            NSLog(@"code %@",stopCode);
-            NSLog(@"name %@",stopName);
-            NSLog(@"lat %@",latitude);
-            NSLog(@"long %@",longitude);
-            NSLog(@"--------------");
-            
+            //NSLog(@"code %@",stopCode);
+            //NSLog(@"name %@",stopName);
+            //NSLog(@"lat %@",latitude);
+            //NSLog(@"long %@",longitude);
+            //NSLog(@"--------------");
+            [self makePin];
         }
 
     }
 }
 
+
 -(void)makePin {
     
-    latitude = [NSString stringWithFormat:@"42.707318"];
-    longitude = [NSString stringWithFormat:@"23.338418"];
+    //latitude = [NSString stringWithFormat:@"42.707318"];
+    //longitude = [NSString stringWithFormat:@"23.338418"];
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
     
-    NSLog(@"Long %f",myLongitude);
-    NSLog(@"Lat %f",myLatitude);
+    //NSLog(@"Long %f",myLongitude);
+    //NSLog(@"Lat %f",myLatitude);
     
     
     MKCoordinateRegion region;
@@ -89,14 +91,38 @@
     region.center.longitude = myLongitude;
     region.span.latitudeDelta = 0.01f;
     region.span.longitudeDelta = 0.01f;
-    [mapView setRegion:region animated:YES];
-    
+    [self.MapContorller setRegion:region animated:YES];
     
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
-    //ann.subtitle =
-    [mapView addAnnotation:ann];
+    ann.title = stopName;
+    ann.subtitle = stopCode;
+    [self.MapContorller addAnnotation:ann];
     
+}
+
+-(MKPinAnnotationView *)pinChangeColor{
+    
+            myPinView.pinColor = MKPinAnnotationColorRed;
+            //myPinView.animatesDrop = YES;
+            myPinView.draggable = YES;
+            return myPinView;
+   
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    
+    MKPinAnnotationView *pinView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+    
+    if (pinView ==nil) {
+        
+        myPinView= [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+        
+            [self pinChangeColor];
+            pinView = myPinView;
+            return pinView;
+    }
+    return 0;
 }
 
 
@@ -105,5 +131,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end
