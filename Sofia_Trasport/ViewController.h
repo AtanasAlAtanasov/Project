@@ -15,6 +15,9 @@
 @interface ViewController : UIViewController<MKMapViewDelegate> {
 
 }
+@property (nonatomic, retain) CLLocationManager *locationManager;
+@property double myCurLatitude;
+@property double myCurLongitude;
 @property (nonatomic) MKPinAnnotationView *myPinView;
 @property (nonatomic) IBOutlet MKMapView *MapContorller;
 - (IBAction)myLocation:(id)sender;
@@ -26,6 +29,5 @@
 @property (nonatomic) NSString *stopCode;
 @property (nonatomic) NSString *stopName;
 
--(MKPinAnnotationView *)pinChangeColor;
 
 @end

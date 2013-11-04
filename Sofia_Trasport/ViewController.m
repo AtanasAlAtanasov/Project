@@ -18,33 +18,30 @@
 
 @implementation ViewController
 
-
-@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
 	self.MapContorller.delegate=self;
-    self.MapContorller.showsUserLocation = YES;
+    //self.MapContorller.showsUserLocation = YES;
     [self loadStops];
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager startUpdatingLocation];
     
     
 }
 
 - (IBAction)myLocation:(id)sender {
     
-    latitude = [NSString stringWithFormat:@"42.672442"];
-    longitude = [NSString stringWithFormat:@"23.297753"];
-    double myLatitude = [latitude doubleValue];
-    double myLongitude = [longitude doubleValue];
     MKCoordinateRegion regionUser;
-    regionUser.center.latitude = myLatitude;
-    regionUser.center.longitude = myLongitude;
+    regionUser.center.latitude = myCurLatitude;
+    regionUser.center.longitude = myCurLongitude;
     regionUser.span.latitudeDelta = 0.01f;
     regionUser.span.longitudeDelta = 0.01f;
     self.MapContorller.showsUserLocation = YES;
-    [self.MapContorller setRegion:regionUser animated:YES];
+    [self.MapContorller setRegion:regionUser animated:NO];
     [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
 }
 
@@ -52,21 +49,18 @@
 -(void)loadStops {
     
     NSURL *stopsUrl = [NSURL URLWithString:@"https://code.google.com/p/sofia-public-transport-navigator/source/browse/res/raw/coordinates.xml?name=Version+1.2+-+fixed+map+key"];
-    //NSLog(@"1 %@",stopsUrl);
     NSData *stopsHtmlData = [NSData dataWithContentsOfURL:stopsUrl];
    
     TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
     
     NSString *stopsXpathQueryString = @"//*[@id='src_table_0']/tr/td";
-    //NSLog(@"2 %@",stopsXpathQueryString);
-    NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
-   
-    for (TFHppleElement *element in stopsNodes) {
 
+    NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
+    for (TFHppleElement *element in stopsNodes) {
+        
         Tutorial *transportStop = [[Tutorial alloc] init];
-    
+        
         transportStop.title = [[element firstChild] content];
-        //NSLog(@"3 %@",transportStop.title);
         
         stringForParse = transportStop.title;
         
@@ -80,12 +74,6 @@
             longitude = (NSString*) [parseStings objectAtIndex:7];
             stopCode = (NSString*) [parseStings objectAtIndex:1];
             stopName = (NSString*) [parseStings objectAtIndex:3];
-            
-            //NSLog(@"code %@",stopCode);
-            //NSLog(@"name %@",stopName);
-            //NSLog(@"lat %@",latitude);
-            //NSLog(@"long %@",longitude);
-            //NSLog(@"--------------");
             [self makePin];
         }
 
@@ -95,14 +83,8 @@
 
 -(void)makePin {
     
-    //latitude = [NSString stringWithFormat:@"42.707318"];
-    //longitude = [NSString stringWithFormat:@"23.338418"];
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
-    
-    //NSLog(@"Long %f",myLongitude);
-    //NSLog(@"Lat %f",myLatitude);
-    
     
     MKCoordinateRegion region;
     region.center.latitude = myLatitude;
@@ -114,33 +96,46 @@
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     ann.title = stopName;
+
     ann.subtitle = stopCode;
     [self.MapContorller addAnnotation:ann];
     
 }
 
--(MKPinAnnotationView *)pinChangeColor{
-    
-            myPinView.pinColor = MKPinAnnotationColorRed;
-            //myPinView.animatesDrop = YES;
-            //myPinView.draggable = YES;
-            return myPinView;
-   
-}
+//-(MKAnnotationView  *)pinChangeColor:(MKAnnotationView  *) pin{
+//    
+//    
+//        //pin.image = [UIImage imageNamed:@"favicon.ico"];
+//        return pin;
+//   
+//}
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    
-    MKPinAnnotationView *pinView = (MKPinAnnotationView*) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+    MKAnnotationView  *pinView = (MKAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
     
     if (pinView ==nil) {
         
-        myPinView= [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+        pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+        //[self pinChangeColor:pinView];
+        pinView.canShowCallout = YES;
         
-            [self pinChangeColor];
-            pinView = myPinView;
-            return pinView;
+        pinView.image = [UIImage imageNamed:@"favicon.ico"];
+
+        return pinView;
     }
-    return 0;
+    //pinView.canShowCallout = YES;
+    
+    return pinView;
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+{
+    
+    myCurLatitude = newLocation.coordinate.latitude;
+    myCurLongitude = newLocation.coordinate.longitude;
+
+    
 }
 
 
