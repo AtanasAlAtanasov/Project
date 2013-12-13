@@ -11,6 +11,7 @@
 #import "Tutorial.h"
 #import "Contributor.h"
 #import "PinClass.h"
+#import "BusInfoViewController.h"
 
 @interface ViewController ()
 
@@ -25,7 +26,6 @@
     [super viewDidLoad];
     
 	self.MapContorller.delegate=self;
-    //self.MapContorller.showsUserLocation = YES;
     [self loadStops];
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
@@ -40,9 +40,10 @@
     regionUser.center.longitude = myCurLongitude;
     regionUser.span.latitudeDelta = 0.01f;
     regionUser.span.longitudeDelta = 0.01f;
-    self.MapContorller.showsUserLocation = YES;
+    self.MapContorller.showsUserLocation = NO;
     [self.MapContorller setRegion:regionUser animated:NO];
     [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
+    
 }
 
 
@@ -85,6 +86,8 @@
     
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
+    myCurLatitude = myLatitude;
+    myCurLongitude = myLongitude;
     
     MKCoordinateRegion region;
     region.center.latitude = myLatitude;
@@ -96,36 +99,39 @@
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     ann.title = stopName;
-
-    ann.subtitle = stopCode;
+    NSString * zeros = @"00000";
+    ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
+    
     [self.MapContorller addAnnotation:ann];
     
 }
 
-//-(MKAnnotationView  *)pinChangeColor:(MKAnnotationView  *) pin{
-//    
-//    
-//        //pin.image = [UIImage imageNamed:@"favicon.ico"];
-//        return pin;
-//   
-//}
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     MKAnnotationView  *pinView = (MKAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
     
-    if (pinView ==nil) {
-        
+    if (pinView == nil) {
         pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
         //[self pinChangeColor:pinView];
         pinView.canShowCallout = YES;
-        
         pinView.image = [UIImage imageNamed:@"favicon.ico"];
-
+        UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [disclosureButton addTarget:self
+                             action:@selector(presentMoreInfo)
+                   forControlEvents:UIControlEventTouchUpInside];
+        pinView.rightCalloutAccessoryView = disclosureButton;
+        
         return pinView;
     }
-    //pinView.canShowCallout = YES;
     
     return pinView;
+}
+-(void)presentMoreInfo {
+    BusInfoViewController * detailsVC = [BusInfoViewController alloc];
+    [self.navigationController pushViewController:detailsVC animated:YES];
+    
+    //BusInfoViewController * busController = [[BusInfoViewController alloc] initWithNibName:@"busViewController" bundle:nil];
+    //[self.navigationController pushViewController:busController animated:YES];
 }
 
 - (void)locationManager:(CLLocationManager *)manager

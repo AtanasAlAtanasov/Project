@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A05788AD181A75D100955FEE /* PinClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A05788AC181A75D100955FEE /* PinClass.m */; };
+		A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05AA4A0185B071200555E68 /* BusInfoViewController.m */; };
 		A06206AF1822B2BE001BA4D8 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = A06206AE1822B2BE001BA4D8 /* favicon.ico */; };
 		A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */; };
 		A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CAACA1182168BF00ECD1E7 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		A05788AB181A75D100955FEE /* PinClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinClass.h; sourceTree = "<group>"; };
 		A05788AC181A75D100955FEE /* PinClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinClass.m; sourceTree = "<group>"; };
+		A05AA49F185B071200555E68 /* BusInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusInfoViewController.h; sourceTree = "<group>"; };
+		A05AA4A0185B071200555E68 /* BusInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoViewController.m; sourceTree = "<group>"; };
 		A06206AE1822B2BE001BA4D8 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
 		A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0CAACA1182168BF00ECD1E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -140,15 +143,17 @@
 		A0CFA5471819783800EAB2F6 /* Sofia_Trasport */ = {
 			isa = PBXGroup;
 			children = (
-				A05788AB181A75D100955FEE /* PinClass.h */,
-				A05788AC181A75D100955FEE /* PinClass.m */,
 				A0CFA57F181996F200EAB2F6 /* Hpple */,
 				A0CFA578181994B300EAB2F6 /* Model */,
 				A0CFA5501819783800EAB2F6 /* AppDelegate.h */,
 				A0CFA5511819783800EAB2F6 /* AppDelegate.m */,
 				A0CFA5531819783800EAB2F6 /* Main.storyboard */,
+				A05788AB181A75D100955FEE /* PinClass.h */,
+				A05788AC181A75D100955FEE /* PinClass.m */,
 				A0CFA5561819783800EAB2F6 /* ViewController.h */,
 				A0CFA5571819783800EAB2F6 /* ViewController.m */,
+				A05AA49F185B071200555E68 /* BusInfoViewController.h */,
+				A05AA4A0185B071200555E68 /* BusInfoViewController.m */,
 				A0CFA5591819783800EAB2F6 /* Images.xcassets */,
 				A0CFA5481819783800EAB2F6 /* Supporting Files */,
 			);
@@ -316,6 +321,7 @@
 				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
 				A0CFA54E1819783800EAB2F6 /* main.m in Sources */,
+				A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
