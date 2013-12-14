@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BusInfoViewController : UIViewController
+@interface BusInfoViewController : UIViewController {
+    NSString *nameOfStop;
+}
 - (IBAction)backButton:(id)sender;
+
+@property (nonatomic,retain) NSString *nameOfStop;
+@property (weak, nonatomic) IBOutlet UITextView *lableName;
+
 
 @end

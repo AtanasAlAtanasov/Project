@@ -9,6 +9,6 @@
 #import "PinClass.h"
 
 @implementation PinClass
-@synthesize coordinate,title,subtitle;
+@synthesize coordinate,title,subtitle,lableTitle;
 
 @end

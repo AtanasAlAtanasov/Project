@@ -19,16 +19,17 @@
 
 @implementation ViewController
 
-@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager,titleName;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-	self.MapContorller.delegate=self;
+    self.MapContorller.delegate=self;
     [self loadStops];
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
+  
+
     
     
 }
@@ -82,6 +83,7 @@
 }
 
 
+
 -(void)makePin {
     
     double myLatitude = [latitude doubleValue];
@@ -101,7 +103,6 @@
     ann.title = stopName;
     NSString * zeros = @"00000";
     ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
-    
     [self.MapContorller addAnnotation:ann];
     
 }
@@ -126,13 +127,24 @@
     
     return pinView;
 }
--(void)presentMoreInfo {
-    BusInfoViewController * detailsVC = [BusInfoViewController alloc];
-    [self.navigationController pushViewController:detailsVC animated:YES];
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
     
-    //BusInfoViewController * busController = [[BusInfoViewController alloc] initWithNibName:@"busViewController" bundle:nil];
-    //[self.navigationController pushViewController:busController animated:YES];
+    BusInfoViewController *busView = [[BusInfoViewController alloc]init];
+    busView.nameOfStop = view.annotation.title;
+    NSLog(@"----1 %@",busView.nameOfStop);
+    
+    
 }
+
+
+-(void)presentMoreInfo
+ {
+    BusInfoViewController *tagEditor = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
+    [self presentModalViewController:tagEditor animated:YES];
+}
+
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
@@ -143,6 +155,7 @@
 
     
 }
+
 
 
 - (void)didReceiveMemoryWarning

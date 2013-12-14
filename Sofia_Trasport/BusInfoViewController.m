@@ -7,12 +7,15 @@
 //
 
 #import "BusInfoViewController.h"
+#import "ViewController.h"
+#import "PinClass.h"
 
 @interface BusInfoViewController ()
 
 @end
 
 @implementation BusInfoViewController
+@synthesize lableName,nameOfStop;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,9 +28,16 @@
 
 - (void)viewDidLoad
 {
+   
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    //ViewController *viewController = [[ViewController alloc] init];
+    lableName.text = nameOfStop;
+    NSLog(@"--2 %@",nameOfStop);
+    NSLog(@"3456 %@",lableName.text);
+
+    // Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning
 {
