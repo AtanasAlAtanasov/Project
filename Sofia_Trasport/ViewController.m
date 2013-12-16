@@ -19,7 +19,7 @@
 
 @implementation ViewController
 
-@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager,titleName;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager;
 
 - (void)viewDidLoad
 {
@@ -28,7 +28,6 @@
     [self loadStops];
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
-  
 
     
     
@@ -113,36 +112,38 @@
     
     if (pinView == nil) {
         pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
-        //[self pinChangeColor:pinView];
         pinView.canShowCallout = YES;
         pinView.image = [UIImage imageNamed:@"favicon.ico"];
         UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
         [disclosureButton addTarget:self
                              action:@selector(presentMoreInfo)
                    forControlEvents:UIControlEventTouchUpInside];
+        
         pinView.rightCalloutAccessoryView = disclosureButton;
         
         return pinView;
     }
     
     return pinView;
+    
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    
-    BusInfoViewController *busView = [[BusInfoViewController alloc]init];
+    BusInfoViewController * busView = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
     busView.nameOfStop = view.annotation.title;
-    NSLog(@"----1 %@",busView.nameOfStop);
-    
+    busView.codeOfStop = view.annotation.subtitle;
+    [self presentModalViewController:busView animated:YES];
     
 }
 
-
 -(void)presentMoreInfo
  {
-    BusInfoViewController *tagEditor = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
-    [self presentModalViewController:tagEditor animated:YES];
+    
+     //BusInfoViewController *tagEditor = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
+     //[self presentModalViewController:tagEditor animated:YES];
+    
 }
 
 
@@ -153,7 +154,6 @@
     myCurLatitude = newLocation.coordinate.latitude;
     myCurLongitude = newLocation.coordinate.longitude;
 
-    
 }
 
 

@@ -15,7 +15,7 @@
 @end
 
 @implementation BusInfoViewController
-@synthesize lableName,nameOfStop;
+@synthesize lableName,nameOfStop,lableCode,codeOfStop;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,13 +30,14 @@
 {
    
     [super viewDidLoad];
-    //ViewController *viewController = [[ViewController alloc] init];
+    
     lableName.text = nameOfStop;
-    NSLog(@"--2 %@",nameOfStop);
-    NSLog(@"3456 %@",lableName.text);
+    lableCode.text = codeOfStop;
+    
 
-    // Do any additional setup after loading the view.
 }
+
+
 
 
 - (void)didReceiveMemoryWarning

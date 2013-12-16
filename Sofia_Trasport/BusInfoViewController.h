@@ -10,11 +10,14 @@
 
 @interface BusInfoViewController : UIViewController {
     NSString *nameOfStop;
+    NSString *codeOfStop;
 }
 - (IBAction)backButton:(id)sender;
 
 @property (nonatomic,retain) NSString *nameOfStop;
-@property (weak, nonatomic) IBOutlet UITextView *lableName;
+@property (nonatomic,retain) NSString *codeOfStop;
+@property (nonatomic) IBOutlet UILabel *lableName;
+@property (nonatomic) IBOutlet UILabel *lableCode;
 
 
 @end
