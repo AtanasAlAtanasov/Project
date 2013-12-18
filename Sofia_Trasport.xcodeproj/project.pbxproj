@@ -11,6 +11,7 @@
 		A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05AA4A0185B071200555E68 /* BusInfoViewController.m */; };
 		A06206AF1822B2BE001BA4D8 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = A06206AE1822B2BE001BA4D8 /* favicon.ico */; };
 		A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */; };
+		A0BDACAC1860A20B00BE5B95 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */; };
 		A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CAACA1182168BF00ECD1E7 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5411819783800EAB2F6 /* Foundation.framework */; };
 		A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
@@ -50,6 +51,8 @@
 		A05AA4A0185B071200555E68 /* BusInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoViewController.m; sourceTree = "<group>"; };
 		A06206AE1822B2BE001BA4D8 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
 		A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A0BDACAA1860A20B00BE5B95 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
+		A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		A0CAACA1182168BF00ECD1E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sofia_Trasport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5411819783800EAB2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 				A0CFA5571819783800EAB2F6 /* ViewController.m */,
 				A05AA49F185B071200555E68 /* BusInfoViewController.h */,
 				A05AA4A0185B071200555E68 /* BusInfoViewController.m */,
+				A0BDACAA1860A20B00BE5B95 /* FavoriteViewController.h */,
+				A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */,
 				A0CFA5591819783800EAB2F6 /* Images.xcassets */,
 				A0CFA5481819783800EAB2F6 /* Supporting Files */,
 			);
@@ -320,6 +325,7 @@
 				A05788AD181A75D100955FEE /* PinClass.m in Sources */,
 				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
+				A0BDACAC1860A20B00BE5B95 /* FavoriteViewController.m in Sources */,
 				A0CFA54E1819783800EAB2F6 /* main.m in Sources */,
 				A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */,
 			);

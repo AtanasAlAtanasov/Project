@@ -11,9 +11,11 @@
 @interface BusInfoViewController : UIViewController {
     NSString *nameOfStop;
     NSString *codeOfStop;
+    NSString *stringForParse;
 }
 - (IBAction)backButton:(id)sender;
 
+@property (nonatomic) NSString *stringForParse;
 @property (nonatomic,retain) NSString *nameOfStop;
 @property (nonatomic,retain) NSString *codeOfStop;
 @property (nonatomic) IBOutlet UILabel *lableName;
