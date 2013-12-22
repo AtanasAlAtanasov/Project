@@ -14,8 +14,10 @@
     NSString *stringForParse;
 }
 - (IBAction)backButton:(id)sender;
+@property (strong, nonatomic) IBOutlet UIWebView *codeWebView;
 
 @property (nonatomic) NSString *stringForParse;
+@property (nonatomic) NSArray *parseString;
 @property (nonatomic,retain) NSString *nameOfStop;
 @property (nonatomic,retain) NSString *codeOfStop;
 @property (nonatomic) IBOutlet UILabel *lableName;

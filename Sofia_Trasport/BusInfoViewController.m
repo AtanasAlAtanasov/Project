@@ -15,7 +15,7 @@
 @end
 
 @implementation BusInfoViewController
-@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse;
+@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +37,6 @@
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?q="];
     NSString *last = [NSString stringWithFormat:@"&o=1&go=1"];
     url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
-    NSLog(@"url - %@",url);
     [self getDataFrom:url];
 
 }
@@ -58,9 +57,21 @@
         return nil;
     }
     
-    NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-    NSLog(@"string %@",stringForParse);
+    parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
+    
+    stringForParse=[parseString[2] substringToIndex:41];
+    
+    
+    NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg"];
+    url = [NSString stringWithFormat:@"%@%@",first,stringForParse];
+    NSLog(@"url %@",url);
+    
+    
+    NSURL *urlAdress = [NSURL URLWithString:url];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
+    
+    [codeWebView loadRequest:requestObj];
     return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
 }
 

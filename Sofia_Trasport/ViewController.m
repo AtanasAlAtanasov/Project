@@ -113,7 +113,7 @@
     if (pinView == nil) {
         pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
         pinView.canShowCallout = YES;
-        pinView.image = [UIImage imageNamed:@"favicon.ico"];
+        pinView.image = [UIImage imageNamed:@"icon1.png"];
         UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
         [disclosureButton addTarget:self

@@ -159,11 +159,17 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <webView userInteractionEnabled="NO" contentMode="TopLeft" fixedFrame="YES" paginationMode="leftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="T2Z-Gs-RnI">
+                                <rect key="frame" x="119" y="303" width="90" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="codeWebView" destination="T2Z-Gs-RnI" id="Pre-rF-Euk"/>
                         <outlet property="lableCode" destination="Hjv-0y-gxc" id="ot1-p9-PCz"/>
                         <outlet property="lableName" destination="yMM-j8-r1s" id="NPW-uN-Ijn"/>
                     </connections>
