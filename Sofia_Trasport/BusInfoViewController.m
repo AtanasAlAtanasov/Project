@@ -15,7 +15,7 @@
 @end
 
 @implementation BusInfoViewController
-@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView;
+@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView,textCodeView,url,stringCodeCheck;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,7 +33,7 @@
     
     lableName.text = nameOfStop;
     lableCode.text = codeOfStop;
-    NSString *url;
+    
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?q="];
     NSString *last = [NSString stringWithFormat:@"&o=1&go=1"];
     url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
@@ -41,11 +41,11 @@
 
 }
 
-- (NSString *) getDataFrom:(NSString *)url{
+- (NSString *) getDataFrom:(NSString *)myUrl{
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     
     [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString:url]];
+    [request setURL:[NSURL URLWithString:myUrl]];
     
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *responseCode = nil;
@@ -53,28 +53,72 @@
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %i", url, [responseCode statusCode]);
+        NSLog(@"Error getting %@, HTTP status code %i", myUrl, [responseCode statusCode]);
         return nil;
     }
     
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
+
     stringForParse=[parseString[2] substringToIndex:41];
     
     
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg"];
-    url = [NSString stringWithFormat:@"%@%@",first,stringForParse];
-    NSLog(@"url %@",url);
+    myUrl = [NSString stringWithFormat:@"%@%@",first,stringForParse];
+    stringCodeCheck = [stringForParse  substringFromIndex:9];
+    first = [NSString stringWithFormat:@"\""];
+    //stringCodeCheck = [NSString stringWithFormat:@"%@%@",first,stringCodeCheck];
+    NSLog(@"url %@",myUrl);
+    NSLog(@"pic Code %@",stringCodeCheck);
     
-    
-    NSURL *urlAdress = [NSURL URLWithString:url];
+    NSURL *urlAdress = [NSURL URLWithString:myUrl];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
-    
     [codeWebView loadRequest:requestObj];
+    
+    //NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
     return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
 }
 
+- (IBAction)checkButton:(id)sender {
+    [self postDataFrom:url];
+    NSLog(@"code %@",textCodeView.text);
+}
+
+- (NSString *) postDataFrom:(NSString *)myUrl{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setURL:[NSURL URLWithString:myUrl]];
+    
+    NSError *error = [[NSError alloc] init];
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %i", myUrl, [responseCode statusCode]);
+        return nil;
+    }
+    
+    stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+    parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
+    
+    
+    stringForParse=[parseString[2] substringWithRange:NSMakeRange(9, 32)];
+    //NSString *first = [NSString stringWithFormat:@"\""];
+    //stringForParse = [NSString stringWithFormat:@"%@%@",first,stringForParse];
+    NSLog(@"pic Code Check %@",stringForParse);
+    
+    NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
+    
+    
+    [request setValue:stringForParse forHTTPHeaderField:stringCodeCheck];
+    NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
+
+    return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+    
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -85,4 +129,5 @@
 - (IBAction)backButton:(id)sender {
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

@@ -15,8 +15,12 @@
 }
 - (IBAction)backButton:(id)sender;
 @property (strong, nonatomic) IBOutlet UIWebView *codeWebView;
+@property (strong, nonatomic) IBOutlet UITextField *textCodeView;
+- (IBAction)checkButton:(id)sender;
 
+@property (nonatomic) NSString *url;
 @property (nonatomic) NSString *stringForParse;
+@property (nonatomic) NSString *stringCodeCheck;
 @property (nonatomic) NSArray *parseString;
 @property (nonatomic,retain) NSString *nameOfStop;
 @property (nonatomic,retain) NSString *codeOfStop;
