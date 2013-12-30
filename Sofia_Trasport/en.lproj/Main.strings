@@ -1,0 +1,24 @@
+
+/* Class = "IBUIBarButtonItem"; title = "Location"; ObjectID = "4ed-PM-2M5"; */
+"4ed-PM-2M5.title" = "Location";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Hjv-0y-gxc"; */
+"Hjv-0y-gxc.text" = "Label";
+
+/* Class = "IBUIBarButtonItem"; title = "<3 List"; ObjectID = "SfZ-du-aJg"; */
+"SfZ-du-aJg.title" = "<3 List";
+
+/* Class = "IBUINavigationItem"; title = "Favorite list"; ObjectID = "XyA-L0-J9L"; */
+"XyA-L0-J9L.title" = "Favorite list";
+
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "ZZt-Nt-g34"; */
+"ZZt-Nt-g34.title" = "Back";
+
+/* Class = "IBUIBarButtonItem"; title = "<3"; ObjectID = "iFd-iC-WfM"; */
+"iFd-iC-WfM.title" = "<3";
+
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "pWh-kk-gMj"; */
+"pWh-kk-gMj.title" = "Back";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "yMM-j8-r1s"; */
+"yMM-j8-r1s.text" = "Label";

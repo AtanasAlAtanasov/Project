@@ -33,7 +33,6 @@
     
     lableName.text = nameOfStop;
     lableCode.text = codeOfStop;
-    
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?q="];
     NSString *last = [NSString stringWithFormat:@"&o=1&go=1"];
     url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
@@ -68,7 +67,7 @@
     myUrl = [NSString stringWithFormat:@"%@%@",first,stringForParse];
     stringCodeCheck = [stringForParse  substringFromIndex:9];
     first = [NSString stringWithFormat:@"\""];
-    //stringCodeCheck = [NSString stringWithFormat:@"%@%@",first,stringCodeCheck];
+    
     NSLog(@"url %@",myUrl);
     NSLog(@"pic Code %@",stringCodeCheck);
     
@@ -76,7 +75,6 @@
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
     [codeWebView loadRequest:requestObj];
     
-    //NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
     return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
 }
 
@@ -106,12 +104,13 @@
     
     
     stringForParse=[parseString[2] substringWithRange:NSMakeRange(9, 32)];
-    //NSString *first = [NSString stringWithFormat:@"\""];
-    //stringForParse = [NSString stringWithFormat:@"%@%@",first,stringForParse];
+
     NSLog(@"pic Code Check %@",stringForParse);
     
     NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);
     
+    
+    [request addValue:textCodeView.text forHTTPHeaderField:@"Content-Type"];
     
     [request setValue:stringForParse forHTTPHeaderField:stringCodeCheck];
     NSLog(@"%@",[[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding]);

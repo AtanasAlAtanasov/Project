@@ -53,22 +53,22 @@
 		A0BDACAA1860A20B00BE5B95 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
 		A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		A0CAACA1182168BF00ECD1E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sofia_Trasport.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0CFA53E1819783800EAB2F6 /* Sofia Transport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sofia Transport.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5411819783800EAB2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A0CFA5451819783800EAB2F6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A0CFA5491819783800EAB2F6 /* Sofia_Trasport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia_Trasport-Info.plist"; sourceTree = "<group>"; };
+		A0CFA5491819783800EAB2F6 /* Sofia Transport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia Transport-Info.plist"; sourceTree = "<group>"; };
 		A0CFA54B1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0CFA54D1819783800EAB2F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		A0CFA54F1819783800EAB2F6 /* Sofia_Trasport-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sofia_Trasport-Prefix.pch"; sourceTree = "<group>"; };
+		A0CFA54F1819783800EAB2F6 /* Sofia Transport-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sofia Transport-Prefix.pch"; sourceTree = "<group>"; };
 		A0CFA5501819783800EAB2F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A0CFA5511819783800EAB2F6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A0CFA5541819783800EAB2F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A0CFA5561819783800EAB2F6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		A0CFA5571819783800EAB2F6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		A0CFA5591819783800EAB2F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A0CFA55F1819783800EAB2F6 /* Sofia_TrasportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sofia_TrasportTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0CFA55F1819783800EAB2F6 /* Sofia TransportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sofia TransportTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5601819783800EAB2F6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		A0CFA5681819783800EAB2F6 /* Sofia_TrasportTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia_TrasportTests-Info.plist"; sourceTree = "<group>"; };
+		A0CFA5681819783800EAB2F6 /* Sofia TransportTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sofia TransportTests-Info.plist"; sourceTree = "<group>"; };
 		A0CFA56A1819783800EAB2F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A0CFA56C1819783800EAB2F6 /* Sofia_TrasportTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Sofia_TrasportTests.m; sourceTree = "<group>"; };
 		A0CFA5791819965100EAB2F6 /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
@@ -124,8 +124,8 @@
 		A0CFA53F1819783800EAB2F6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */,
-				A0CFA55F1819783800EAB2F6 /* Sofia_TrasportTests.xctest */,
+				A0CFA53E1819783800EAB2F6 /* Sofia Transport.app */,
+				A0CFA55F1819783800EAB2F6 /* Sofia TransportTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,10 +169,10 @@
 			isa = PBXGroup;
 			children = (
 				A0D49FA71867734100A153DF /* icon1.png */,
-				A0CFA5491819783800EAB2F6 /* Sofia_Trasport-Info.plist */,
+				A0CFA5491819783800EAB2F6 /* Sofia Transport-Info.plist */,
 				A0CFA54A1819783800EAB2F6 /* InfoPlist.strings */,
 				A0CFA54D1819783800EAB2F6 /* main.m */,
-				A0CFA54F1819783800EAB2F6 /* Sofia_Trasport-Prefix.pch */,
+				A0CFA54F1819783800EAB2F6 /* Sofia Transport-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -189,7 +189,7 @@
 		A0CFA5671819783800EAB2F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A0CFA5681819783800EAB2F6 /* Sofia_TrasportTests-Info.plist */,
+				A0CFA5681819783800EAB2F6 /* Sofia TransportTests-Info.plist */,
 				A0CFA5691819783800EAB2F6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -222,9 +222,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A0CFA53D1819783800EAB2F6 /* Sofia_Trasport */ = {
+		A0CFA53D1819783800EAB2F6 /* Sofia Transport */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0CFA5701819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia_Trasport" */;
+			buildConfigurationList = A0CFA5701819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia Transport" */;
 			buildPhases = (
 				A0CFA53A1819783800EAB2F6 /* Sources */,
 				A0CFA53B1819783800EAB2F6 /* Frameworks */,
@@ -234,14 +234,14 @@
 			);
 			dependencies = (
 			);
-			name = Sofia_Trasport;
+			name = "Sofia Transport";
 			productName = Sofia_Trasport;
-			productReference = A0CFA53E1819783800EAB2F6 /* Sofia_Trasport.app */;
+			productReference = A0CFA53E1819783800EAB2F6 /* Sofia Transport.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A0CFA55E1819783800EAB2F6 /* Sofia_TrasportTests */ = {
+		A0CFA55E1819783800EAB2F6 /* Sofia TransportTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0CFA5731819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia_TrasportTests" */;
+			buildConfigurationList = A0CFA5731819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia TransportTests" */;
 			buildPhases = (
 				A0CFA55B1819783800EAB2F6 /* Sources */,
 				A0CFA55C1819783800EAB2F6 /* Frameworks */,
@@ -252,9 +252,9 @@
 			dependencies = (
 				A0CFA5651819783800EAB2F6 /* PBXTargetDependency */,
 			);
-			name = Sofia_TrasportTests;
+			name = "Sofia TransportTests";
 			productName = Sofia_TrasportTests;
-			productReference = A0CFA55F1819783800EAB2F6 /* Sofia_TrasportTests.xctest */;
+			productReference = A0CFA55F1819783800EAB2F6 /* Sofia TransportTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -271,7 +271,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A0CFA5391819783800EAB2F6 /* Build configuration list for PBXProject "Sofia_Trasport" */;
+			buildConfigurationList = A0CFA5391819783800EAB2F6 /* Build configuration list for PBXProject "Sofia Transport" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -284,8 +284,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A0CFA53D1819783800EAB2F6 /* Sofia_Trasport */,
-				A0CFA55E1819783800EAB2F6 /* Sofia_TrasportTests */,
+				A0CFA53D1819783800EAB2F6 /* Sofia Transport */,
+				A0CFA55E1819783800EAB2F6 /* Sofia TransportTests */,
 			);
 		};
 /* End PBXProject section */
@@ -344,7 +344,7 @@
 /* Begin PBXTargetDependency section */
 		A0CFA5651819783800EAB2F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A0CFA53D1819783800EAB2F6 /* Sofia_Trasport */;
+			target = A0CFA53D1819783800EAB2F6 /* Sofia Transport */;
 			targetProxy = A0CFA5641819783800EAB2F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -462,9 +462,9 @@
 					/Volumes/Second/Xcode/Sofia_Trasport,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia_Trasport-Prefix.pch";
-				INFOPLIST_FILE = "Sofia_Trasport/Sofia_Trasport-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia Transport-Prefix.pch";
+				INFOPLIST_FILE = "Sofia_Trasport/Sofia Transport-Info.plist";
+				PRODUCT_NAME = "Sofia Transport";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -480,9 +480,9 @@
 					/Volumes/Second/Xcode/Sofia_Trasport,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia_Trasport-Prefix.pch";
-				INFOPLIST_FILE = "Sofia_Trasport/Sofia_Trasport-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia Transport-Prefix.pch";
+				INFOPLIST_FILE = "Sofia_Trasport/Sofia Transport-Info.plist";
+				PRODUCT_NAME = "Sofia Transport";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -503,8 +503,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "Sofia_TrasportTests/Sofia_TrasportTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Sofia_TrasportTests/Sofia TransportTests-Info.plist";
+				PRODUCT_NAME = "Sofia TransportTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -522,8 +522,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia_Trasport-Prefix.pch";
-				INFOPLIST_FILE = "Sofia_TrasportTests/Sofia_TrasportTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Sofia_TrasportTests/Sofia TransportTests-Info.plist";
+				PRODUCT_NAME = "Sofia TransportTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -532,7 +532,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A0CFA5391819783800EAB2F6 /* Build configuration list for PBXProject "Sofia_Trasport" */ = {
+		A0CFA5391819783800EAB2F6 /* Build configuration list for PBXProject "Sofia Transport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0CFA56E1819783800EAB2F6 /* Debug */,
@@ -541,7 +541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0CFA5701819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia_Trasport" */ = {
+		A0CFA5701819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia Transport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0CFA5711819783800EAB2F6 /* Debug */,
@@ -550,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0CFA5731819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia_TrasportTests" */ = {
+		A0CFA5731819783800EAB2F6 /* Build configuration list for PBXNativeTarget "Sofia TransportTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0CFA5741819783800EAB2F6 /* Debug */,

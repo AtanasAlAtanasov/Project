@@ -28,8 +28,8 @@
             <objects>
                 <viewController storyboardIdentifier="myViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0ZK-ha-iYD"/>
-                        <viewControllerLayoutGuide type="bottom" id="JeF-1I-SwU"/>
+                        <viewControllerLayoutGuide type="top" id="FCl-wh-I2j"/>
+                        <viewControllerLayoutGuide type="bottom" id="G64-CF-jjG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -126,8 +126,8 @@
             <objects>
                 <viewController storyboardIdentifier="busViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4xI-w7-a3v" customClass="BusInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SFa-LA-Zyf"/>
-                        <viewControllerLayoutGuide type="bottom" id="2rX-4j-QOg"/>
+                        <viewControllerLayoutGuide type="top" id="LZZ-gO-Jq9"/>
+                        <viewControllerLayoutGuide type="bottom" id="csC-iQ-ox8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="J0p-IP-rfH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
