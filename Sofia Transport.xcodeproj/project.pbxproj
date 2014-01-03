@@ -482,6 +482,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia Transport-Prefix.pch";
 				INFOPLIST_FILE = "Sofia_Trasport/Sofia Transport-Info.plist";
+				OTHER_CFLAGS = "-NDEBUG";
 				PRODUCT_NAME = "Sofia Transport";
 				WRAPPER_EXTENSION = app;
 			};
