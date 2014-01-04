@@ -129,7 +129,7 @@
                         <viewControllerLayoutGuide type="top" id="LZZ-gO-Jq9"/>
                         <viewControllerLayoutGuide type="bottom" id="csC-iQ-ox8"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="J0p-IP-rfH">
+                    <view key="view" contentMode="scaleToFill" id="J0p-IP-rfH" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -169,6 +169,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="backGroundTouch:" destination="4xI-w7-a3v" eventType="editingDidEnd" id="KVg-DL-grq"/>
+                                    <action selector="backGroundTouch:" destination="qZH-0z-VHT" eventType="editingDidEnd" id="o3s-kl-JlA"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w0F-Jt-p81">
                                 <rect key="frame" x="121" y="109" width="61" height="30"/>
@@ -190,6 +194,9 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="backGroundTouch:" destination="qZH-0z-VHT" eventType="touchDown" id="EWg-WL-BpE"/>
+                        </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>

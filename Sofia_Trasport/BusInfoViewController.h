@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIWebView *codeWebView;
 @property (strong, nonatomic) IBOutlet UITextField *textCodeView;
 - (IBAction)checkButton:(id)sender;
+-(IBAction)backGroundTouch:(id)sender;
 
 @property (nonatomic) NSString *url;
 @property (nonatomic) NSString *stringForParse;
