@@ -25,12 +25,33 @@
 {
     [super viewDidLoad];
     self.MapContorller.delegate=self;
-    [self loadStops];
+    //[self loadStops];
     locationManager = [[CLLocationManager alloc] init];
     [locationManager startUpdatingLocation];
-
     
+    NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
+    NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
     
+    if (loadTest == nil) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
+        [alert show];
+    } else {
+        [self loadStops];
+    }
+}
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1){
+        NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
+        NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
+        
+        if (loadTest == nil) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
+            [alert show];
+        } else {
+            [self loadStops];
+        }
+    }
 }
 
 - (IBAction)myLocation:(id)sender {
@@ -40,7 +61,7 @@
     regionUser.center.longitude = myCurLongitude;
     regionUser.span.latitudeDelta = 0.01f;
     regionUser.span.longitudeDelta = 0.01f;
-    self.MapContorller.showsUserLocation = NO;
+    self.MapContorller.showsUserLocation = YES;
     [self.MapContorller setRegion:regionUser animated:NO];
     [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
     
@@ -67,7 +88,7 @@
         
         parseStings = [stringForParse componentsSeparatedByString:@"\""];
         
-        int a=0;
+        NSUInteger a=0;
         a = [parseStings count];
         
         if(a == 9) {
@@ -82,6 +103,28 @@
 }
 
 
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKAnnotationView  *pinView = (MKAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+    
+    if (annotation == mapView.userLocation) return nil;
+    else if (pinView == nil) {
+        pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+        pinView.canShowCallout = YES;
+        pinView.image = [UIImage imageNamed:@"icon1.png"];
+        UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
+        [disclosureButton addTarget:self
+                             action:@selector(presentMoreInfo)
+                   forControlEvents:UIControlEventTouchUpInside];
+        
+        pinView.rightCalloutAccessoryView = disclosureButton;
+        
+        return pinView;
+    }
+    
+    return pinView;
+    
+}
 
 -(void)makePin {
     
@@ -103,29 +146,6 @@
     NSString * zeros = @"00000";
     ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
     [self.MapContorller addAnnotation:ann];
-    
-}
-
-
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    MKAnnotationView  *pinView = (MKAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
-    
-    if (pinView == nil) {
-        pinView= [[MKAnnotationView  alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
-        pinView.canShowCallout = YES;
-        pinView.image = [UIImage imageNamed:@"icon1.png"];
-        UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        
-        [disclosureButton addTarget:self
-                             action:@selector(presentMoreInfo)
-                   forControlEvents:UIControlEventTouchUpInside];
-        
-        pinView.rightCalloutAccessoryView = disclosureButton;
-        
-        return pinView;
-    }
-    
-    return pinView;
     
 }
 
@@ -163,6 +183,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

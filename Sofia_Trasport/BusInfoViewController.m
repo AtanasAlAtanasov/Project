@@ -54,6 +54,7 @@
     
     if ([response statusCode] != 200) {
         NSLog(@"Error getting %@, HTTP status code %i", myUrl, [response statusCode]);
+        textForBus.text = [NSString stringWithFormat:@"Проблем с достъпа до сървъра.\nСъжеляваме за проблема."];
         return nil;
     }
     
@@ -63,9 +64,7 @@
     
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
-    NSLog(@"stringggg: %d",[stringForParse length]);
-    
-    if([stringForParse length]<=2530){
+    if([stringForParse length]<=2530 && [stringForParse length]>=2350){
         self.textForBus.hidden=YES;
         stringForParse=[parseString[2] substringToIndex:41];
         NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg"];
@@ -77,8 +76,7 @@
         NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
         [codeWebView loadRequest:requestObj];
        
-    } else if ([stringForParse length]>=2530){
-        [textCodeView isHidden];
+    } else if ([stringForParse length]>=2530 || [stringForParse length]<=2350){
         [self postDataFrom:url];
     }
     
@@ -117,6 +115,9 @@
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
+    
+    
+    
     if([parseString[1] length]<=865){
 
     stringForParse=[parseString[2] substringWithRange:NSMakeRange(9, 32)];
@@ -124,28 +125,43 @@
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"};
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"DONE!: %@",responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Failed to log in: %@", operation.responseString);
+           // NSLog(@"Data: %@", operation.responseString);
             self.textForBus.hidden = NO;
             textForBus.text = operation.responseString;
             
-            
+            NSArray *resultArray;
+            resultArray = [operation.responseString componentsSeparatedByString:@" "];
+            int a = 0;
+            for(NSString * str in resultArray){
+                NSLog(@"Array %d: %@",a,[resultArray objectAtIndex:a]);
+                a++;
+                
+            }
+            [textCodeView resignFirstResponder];
+
         }];
     } else if ([parseString[1] length]>=865) {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSDictionary *myRequest = @{@"q":codeOfStop};
-        [manager GET:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"DONE!: %@",responseObject);
+            [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"data: %@",operation.responseString);
+           // NSLog(@"Data: %@",operation.responseString);
             textForBus.text = operation.responseString;
-        
+            
+            NSArray *resultArray;
+            resultArray = [operation.responseString componentsSeparatedByString:@" "];
+            int a = 0;
+            for(NSString * str in resultArray){
+                NSLog(@"Array %d: %@",a,[resultArray objectAtIndex:a]);
+                a++;
+                
+            }
+            
         }];
     }
     
-    
+   
     return [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
     
 }

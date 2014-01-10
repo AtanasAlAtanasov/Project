@@ -12,15 +12,15 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MKPinAnnotationView.h>
 
-@interface ViewController : UIViewController<MKMapViewDelegate> {
+@interface ViewController : UIViewController<MKMapViewDelegate, UIAlertViewDelegate>{
 
 }
 @property (nonatomic,retain) CLLocationManager *locationManager;
 @property double myCurLatitude;
 @property double myCurLongitude;
 @property (nonatomic) MKPinAnnotationView *myPinView;
-
 @property (nonatomic) IBOutlet MKMapView *MapContorller;
+
 - (IBAction)myLocation:(id)sender;
 @property (nonatomic) NSString *stringForParse;
 @property (nonatomic) NSArray *parseStings;
