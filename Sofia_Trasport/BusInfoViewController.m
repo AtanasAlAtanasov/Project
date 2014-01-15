@@ -117,7 +117,6 @@
     
     
     
-    
     if([parseString[1] length]<=865){
 
     stringForParse=[parseString[2] substringWithRange:NSMakeRange(9, 32)];

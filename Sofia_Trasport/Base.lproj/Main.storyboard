@@ -16,12 +16,49 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Jl9-8o-OgL"/>
+                        <segue destination="P59-H1-ZrG" kind="relationship" relationship="rootViewController" id="Lnl-Bt-khf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shf-Ba-JT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-249" y="22"/>
+            <point key="canvasLocation" x="-680" y="22"/>
+        </scene>
+        <!--Load View Controller-->
+        <scene sceneID="9mR-BV-HSU">
+            <objects>
+                <viewController id="P59-H1-ZrG" customClass="LoadViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gJO-AX-axZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="PAq-Ci-FCx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Oy0-Ug-VhD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5Lg-yc-kg0">
+                                <rect key="frame" x="142" y="304" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jJ-oR-hxF">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Tap to continue">
+                                    <color key="titleColor" red="0.0036090353260869179" green="0.0" blue="0.0027966615398958431" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="modal" id="veh-nJ-xMU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.40463498274344151" green="0.87028702445652173" blue="0.24139218282403924" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3dw-zx-evj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wes-eL-hj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-253" y="22"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">

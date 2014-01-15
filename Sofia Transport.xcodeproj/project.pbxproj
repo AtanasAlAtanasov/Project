@@ -21,6 +21,7 @@
 		A0B28D471878174000CDE0D0 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B28D3E1878174000CDE0D0 /* AFURLSessionManager.m */; };
 		A0BDACAC1860A20B00BE5B95 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */; };
 		A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CAACA1182168BF00ECD1E7 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		A0CC882A18833AEB00F3BD7A /* LoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CC882918833AEB00F3BD7A /* LoadViewController.m */; };
 		A0CFA5421819783800EAB2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5411819783800EAB2F6 /* Foundation.framework */; };
 		A0CFA5461819783800EAB2F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFA5451819783800EAB2F6 /* UIKit.framework */; };
 		A0CFA54C1819783800EAB2F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0CFA54A1819783800EAB2F6 /* InfoPlist.strings */; };
@@ -81,6 +82,8 @@
 		A0BDACAA1860A20B00BE5B95 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
 		A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		A0CAACA1182168BF00ECD1E7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A0CC882818833AEB00F3BD7A /* LoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadViewController.h; sourceTree = "<group>"; };
+		A0CC882918833AEB00F3BD7A /* LoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadViewController.m; sourceTree = "<group>"; };
 		A0CFA53E1819783800EAB2F6 /* Sofia Transport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sofia Transport.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0CFA5411819783800EAB2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A0CFA5451819783800EAB2F6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -206,6 +209,8 @@
 				A0CFA5501819783800EAB2F6 /* AppDelegate.h */,
 				A0CFA5511819783800EAB2F6 /* AppDelegate.m */,
 				A0CFA5531819783800EAB2F6 /* Main.storyboard */,
+				A0CC882818833AEB00F3BD7A /* LoadViewController.h */,
+				A0CC882918833AEB00F3BD7A /* LoadViewController.m */,
 				A05788AB181A75D100955FEE /* PinClass.h */,
 				A05788AC181A75D100955FEE /* PinClass.m */,
 				A0CFA5561819783800EAB2F6 /* ViewController.h */,
@@ -321,6 +326,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Atanas Atanasov";
 				TargetAttributes = {
+					A0CFA53D1819783800EAB2F6 = {
+						DevelopmentTeam = 3Z26Z2S6XV;
+					};
 					A0CFA55E1819783800EAB2F6 = {
 						TestTargetID = A0CFA53D1819783800EAB2F6;
 					};
@@ -385,6 +393,7 @@
 				A0B28D461878174000CDE0D0 /* AFURLResponseSerialization.m in Sources */,
 				A0B28D451878174000CDE0D0 /* AFURLRequestSerialization.m in Sources */,
 				A0B28D441878174000CDE0D0 /* AFURLConnectionOperation.m in Sources */,
+				A0CC882A18833AEB00F3BD7A /* LoadViewController.m in Sources */,
 				A0B28D401878174000CDE0D0 /* AFHTTPRequestOperationManager.m in Sources */,
 				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
@@ -521,6 +530,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/Second/Xcode/Sofia_Trasport,
@@ -528,7 +538,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia Transport-Prefix.pch";
 				INFOPLIST_FILE = "Sofia_Trasport/Sofia Transport-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Sofia Transport";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -539,6 +552,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Volumes/Second/Xcode/Sofia_Trasport,
@@ -546,8 +560,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sofia_Trasport/Sofia Transport-Prefix.pch";
 				INFOPLIST_FILE = "Sofia_Trasport/Sofia Transport-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-NDEBUG";
 				PRODUCT_NAME = "Sofia Transport";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
