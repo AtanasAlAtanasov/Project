@@ -10,7 +10,7 @@
 #import "ViewController.h"
 
 @implementation LoadViewController
-
+@synthesize loadLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,9 +25,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    //ViewController * mapView = [self.storyboard instantiateViewControllerWithIdentifier:@"myViewController"];
-    //[self presentModalViewController:mapView animated:NO];
+    [self startScreen];
 }
+
+-(void) startScreen {
+    [UIView animateWithDuration:2.0 animations:^{
+        self.loadLabel.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        ViewController *startController = [self.storyboard instantiateViewControllerWithIdentifier:@"myViewController"];
+        [self.navigationController pushViewController:startController animated:YES];
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

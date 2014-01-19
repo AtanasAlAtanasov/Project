@@ -53,7 +53,7 @@
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if ([response statusCode] != 200) {
-        NSLog(@"Error getting %@, HTTP status code %i", myUrl, [response statusCode]);
+        NSLog(@"Error getting %@, HTTP status code %li", myUrl, (long)[response statusCode]);
         textForBus.text = [NSString stringWithFormat:@"Проблем с достъпа до сървъра.\nСъжеляваме за проблема."];
         return nil;
     }
@@ -107,7 +107,7 @@
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if([response statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %i", myUrl, [response statusCode]);
+        NSLog(@"Error getting %@, HTTP status code %li", myUrl, (long)[response statusCode]);
         return nil;
     }
     self.cookieMonster = response.allHeaderFields[@"Set-Cookie"];

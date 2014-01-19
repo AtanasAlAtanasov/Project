@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LoadViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UILabel *loadLabel;
 
 @end

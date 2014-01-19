@@ -155,7 +155,7 @@
     busView.nameOfStop = view.annotation.title;
     busView.codeOfStop = view.annotation.subtitle;
     [self presentModalViewController:busView animated:YES];
-    
+
 }
 
 -(void)presentMoreInfo

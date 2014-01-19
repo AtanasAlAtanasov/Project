@@ -26,7 +26,7 @@
         <!--Load View Controller-->
         <scene sceneID="9mR-BV-HSU">
             <objects>
-                <viewController id="P59-H1-ZrG" customClass="LoadViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Load" useStoryboardIdentifierAsRestorationIdentifier="YES" id="P59-H1-ZrG" customClass="LoadViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gJO-AX-axZ"/>
                         <viewControllerLayoutGuide type="bottom" id="PAq-Ci-FCx"/>
@@ -40,21 +40,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jJ-oR-hxF">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please wait.." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6py-W5-tGM">
+                                <rect key="frame" x="30" y="229" width="260" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Tap to continue">
-                                    <color key="titleColor" red="0.0036090353260869179" green="0.0" blue="0.0027966615398958431" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="modal" id="veh-nJ-xMU"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.40463498274344151" green="0.87028702445652173" blue="0.24139218282403924" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="3dw-zx-evj"/>
+                    <connections>
+                        <outlet property="loadLabel" destination="6py-W5-tGM" id="YXJ-84-ER6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wes-eL-hj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
