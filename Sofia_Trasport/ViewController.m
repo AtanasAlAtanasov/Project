@@ -72,9 +72,8 @@
     
     NSURL *stopsUrl = [NSURL URLWithString:@"https://code.google.com/p/sofia-public-transport-navigator/source/browse/res/raw/coordinates.xml?name=Version+1.2+-+fixed+map+key"];
     NSData *stopsHtmlData = [NSData dataWithContentsOfURL:stopsUrl];
-   
-    TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
     
+    TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
     NSString *stopsXpathQueryString = @"//*[@id='src_table_0']/tr/td";
 
     NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
@@ -85,7 +84,7 @@
         transportStop.title = [[element firstChild] content];
         
         stringForParse = transportStop.title;
-        
+        //NSLog(@"stringgg: %@",stringForParse);
         parseStings = [stringForParse componentsSeparatedByString:@"\""];
         
         NSUInteger a=0;

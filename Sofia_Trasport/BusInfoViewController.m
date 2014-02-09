@@ -10,6 +10,9 @@
 #import "ViewController.h"
 #import "PinClass.h"
 
+#import "TFHpple.h"
+#import "Tutorial.h"
+
 #import "AFHTTPRequestOperation.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "AFURLConnectionOperation.h"
@@ -129,6 +132,24 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             // NSLog(@"Data: %@",operation.responseString);
             textForBus.text = operation.responseString;
+            //NSLog(@"text for parse: %@",operation.responseString);
+            
+            
+            NSString *searchedString = operation.responseString;
+            NSRange   searchedRange = NSMakeRange(0, [searchedString length]);
+            NSString *pattern = @"(\\<b>)(.{1,})(\\</b>)";//@"(?:www\\.)?((?!-)[a-zA-Z0-9-]{2,63}(?<!-))\\.?((?:[a-zA-Z0-9]{2,})?(?:\\.[a-zA-Z0-9]{2,})?)";
+            NSError  *myError = nil;
+            
+            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: pattern options:0 error:&myError];
+            NSArray* matches = [regex matchesInString:searchedString options:0 range: searchedRange];
+            for (NSTextCheckingResult* match in matches) {
+                //NSString* matchText = [searchedString substringWithRange:[match range]];
+                //NSLog(@"match2: %@", matchText);
+                NSRange group2 = [match rangeAtIndex:2];
+                //NSLog(@"group1: %@", [searchedString substringWithRange:group1]);
+                NSLog(@"group2: %@", [searchedString substringWithRange:group2]);
+
+            }
             
             NSArray *resultArray;
             resultArray = [operation.responseString componentsSeparatedByString:@" "];
@@ -142,9 +163,6 @@
         }];
     } else {
         //Има символите от
-        
-        //stringForParse=[parseString[2] substringWithRange:NSMakeRange(9, 32)];
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"};
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -152,6 +170,58 @@
             // NSLog(@"Data: %@", operation.responseString);
             self.textForBus.hidden = NO;
             textForBus.text = operation.responseString;
+            
+            
+            NSLog(@"text for parse: %@",operation.responseString);
+            
+            
+            NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
+            NSString *stopsXpathQueryString = @"//div[starts-with(@class,'arrivals')]//b";
+            
+            
+            NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
+            for (TFHppleElement *element in stopsNodes) {
+                
+                Tutorial *transportStop = [[Tutorial alloc] init];
+                
+                transportStop.title = [[element firstChild] content];
+                
+                stringForParse = transportStop.title;
+                NSLog(@"stringgg: %@",stringForParse);
+                //parseStings = [stringForParse componentsSeparatedByString:@"\""];
+                
+//                NSUInteger a=0;
+//                a = [parseStings count];
+//                
+//                if(a == 9) {
+//                    latitude = (NSString*) [parseStings objectAtIndex:5];
+//                    longitude = (NSString*) [parseStings objectAtIndex:7];
+//                    stopCode = (NSString*) [parseStings objectAtIndex:1];
+//                    stopName = (NSString*) [parseStings objectAtIndex:3];
+//                    [self makePin];
+//                }
+                
+            }
+            
+//            NSString *searchedString = operation.responseString;
+//            NSRange   searchedRange = NSMakeRange(0, [searchedString length]);
+//            NSString *pattern = @"((<b>)(.{1,})(</b>))";
+//            //@"(?:www\\.)?((?!-)[a-zA-Z0-9-]{2,63}(?<!-))\\.?((?:[a-zA-Z0-9]{2,})?(?:\\.[a-zA-Z0-9]{2,})?)";
+//            NSError  *myError = nil;
+//            NSLog(@"humm: %@",searchedString);
+//            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: pattern options:0 error:&myError];
+//                NSArray* matches = [regex matchesInString:searchedString options:0 range: searchedRange];
+//                for (NSTextCheckingResult* match in matches) {
+//                    //NSString* matchText = [searchedString substringWithRange:[match range]];
+//                    //NSLog(@"match1: %@", matchText);
+//                    //NSRange group1 = [match rangeAtIndex:1];
+//                    NSRange group2 = [match rangeAtIndex:1];
+//                    //NSLog(@"group1: %@", [searchedString substringWithRange:group1]);
+//                    NSLog(@"group2: %@", [searchedString substringWithRange:group2]);
+//                    
+//                }
             
             NSArray *resultArray;
             resultArray = [operation.responseString componentsSeparatedByString:@" "];
