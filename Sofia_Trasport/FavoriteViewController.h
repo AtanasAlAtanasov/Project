@@ -11,5 +11,6 @@
 @interface FavoriteViewController : UITableViewController
 
 - (IBAction)backButton:(id)sender;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -7,12 +7,17 @@
 //
 
 #import "FavoriteViewController.h"
+#import "AppDelegate.h"
+#import "BusClass.h"
 
 @interface FavoriteViewController ()
+
+@property (nonatomic,strong)NSMutableArray* fetchedRecordsArray;
 
 @end
 
 @implementation FavoriteViewController
+@synthesize managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,12 +31,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    self.fetchedRecordsArray = [[NSMutableArray alloc] init];
+    
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    // Fetching Records and saving it in "fetchedRecordsArray" object
+    [self.fetchedRecordsArray addObjectsFromArray:[appDelegate getAllBusRecords]];
+    //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
+    [self.tableView reloadData];
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,24 +56,57 @@
 {
 //#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    //[tableView setEditing:YES animated:YES];
+    return [self.fetchedRecordsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //[tableView setEditing:YES animated:YES];
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    BusClass * busData = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
+    NSLog(@"name :%@",busData.name);
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",busData.name];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",busData.code];
     // Configure the cell...
     
     return cell;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+       
+        
+        
+        //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        
+        //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
+        
+        BusClass *punToDelete = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
+        NSLog(@"Deleting (%@)", punToDelete.name);
+        
+        //[self.fetchedRecordsArray delete:indexPath];
+        
+        NSLog(@"all :%@",self.fetchedRecordsArray);
+        
+        
+        //NSManagedObject *managedObject = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
+        
+        //[self.fetchedRecordsArray delete:indexPath]; // deleteObject:managedObject];
+        [self.tableView reloadData];
+        
+       //[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+    }
 }
 
 /*

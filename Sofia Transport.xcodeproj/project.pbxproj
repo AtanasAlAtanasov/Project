@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		A05788AD181A75D100955FEE /* PinClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A05788AC181A75D100955FEE /* PinClass.m */; };
 		A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05AA4A0185B071200555E68 /* BusInfoViewController.m */; };
+		A08C7C3218B496C20045E499 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08C7C3118B496C20045E499 /* CoreData.framework */; };
+		A08C7C3518B496E50045E499 /* BusDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A08C7C3318B496E50045E499 /* BusDataModel.xcdatamodeld */; };
+		A08C7C6118B558860045E499 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08C7C6018B558860045E499 /* CoreGraphics.framework */; };
+		A08C7C6418B55B520045E499 /* BusClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A08C7C6318B55B520045E499 /* BusClass.m */; };
 		A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */; };
 		A0B28D3F1878174000CDE0D0 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B28D2D1878174000CDE0D0 /* AFHTTPRequestOperation.m */; };
 		A0B28D401878174000CDE0D0 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B28D2F1878174000CDE0D0 /* AFHTTPRequestOperationManager.m */; };
@@ -59,6 +63,11 @@
 		A05788AC181A75D100955FEE /* PinClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinClass.m; sourceTree = "<group>"; };
 		A05AA49F185B071200555E68 /* BusInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusInfoViewController.h; sourceTree = "<group>"; };
 		A05AA4A0185B071200555E68 /* BusInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoViewController.m; sourceTree = "<group>"; };
+		A08C7C3118B496C20045E499 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A08C7C3418B496E50045E499 /* BusDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BusDataModel.xcdatamodel; sourceTree = "<group>"; };
+		A08C7C6018B558860045E499 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A08C7C6218B55B520045E499 /* BusClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusClass.h; sourceTree = "<group>"; };
+		A08C7C6318B55B520045E499 /* BusClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusClass.m; sourceTree = "<group>"; };
 		A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0B28D2C1878174000CDE0D0 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		A0B28D2D1878174000CDE0D0 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -121,6 +130,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A08C7C6118B558860045E499 /* CoreGraphics.framework in Frameworks */,
+				A08C7C3218B496C20045E499 /* CoreData.framework in Frameworks */,
 				A0CFA58A181997B100EAB2F6 /* libxml2.2.dylib in Frameworks */,
 				A0CAACA2182168BF00ECD1E7 /* MapKit.framework in Frameworks */,
 				A0AD7D40181E510C006DC3E3 /* CoreLocation.framework in Frameworks */,
@@ -190,6 +201,8 @@
 		A0CFA5401819783800EAB2F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A08C7C6018B558860045E499 /* CoreGraphics.framework */,
+				A08C7C3118B496C20045E499 /* CoreData.framework */,
 				A0CFA589181997B100EAB2F6 /* libxml2.2.dylib */,
 				A0CAACA1182168BF00ECD1E7 /* MapKit.framework */,
 				A0AD7D3F181E510C006DC3E3 /* CoreLocation.framework */,
@@ -213,12 +226,15 @@
 				A0CC882918833AEB00F3BD7A /* LoadViewController.m */,
 				A05788AB181A75D100955FEE /* PinClass.h */,
 				A05788AC181A75D100955FEE /* PinClass.m */,
+				A08C7C6218B55B520045E499 /* BusClass.h */,
+				A08C7C6318B55B520045E499 /* BusClass.m */,
 				A0CFA5561819783800EAB2F6 /* ViewController.h */,
 				A0CFA5571819783800EAB2F6 /* ViewController.m */,
 				A05AA49F185B071200555E68 /* BusInfoViewController.h */,
 				A05AA4A0185B071200555E68 /* BusInfoViewController.m */,
 				A0BDACAA1860A20B00BE5B95 /* FavoriteViewController.h */,
 				A0BDACAB1860A20B00BE5B95 /* FavoriteViewController.m */,
+				A08C7C3318B496E50045E499 /* BusDataModel.xcdatamodeld */,
 				A0CFA5591819783800EAB2F6 /* Images.xcassets */,
 				A0CFA5481819783800EAB2F6 /* Supporting Files */,
 			);
@@ -327,7 +343,7 @@
 				ORGANIZATIONNAME = "Atanas Atanasov";
 				TargetAttributes = {
 					A0CFA53D1819783800EAB2F6 = {
-						DevelopmentTeam = 3Z26Z2S6XV;
+						DevelopmentTeam = 7W3HC44428;
 					};
 					A0CFA55E1819783800EAB2F6 = {
 						TestTargetID = A0CFA53D1819783800EAB2F6;
@@ -398,8 +414,10 @@
 				A0CFA57E1819966900EAB2F6 /* Contributor.m in Sources */,
 				A0CFA5521819783800EAB2F6 /* AppDelegate.m in Sources */,
 				A0B28D431878174000CDE0D0 /* AFSecurityPolicy.m in Sources */,
+				A08C7C6418B55B520045E499 /* BusClass.m in Sources */,
 				A0BDACAC1860A20B00BE5B95 /* FavoriteViewController.m in Sources */,
 				A0CFA54E1819783800EAB2F6 /* main.m in Sources */,
+				A08C7C3518B496E50045E499 /* BusDataModel.xcdatamodeld in Sources */,
 				A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,7 +504,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
 			};
 			name = Debug;
 		};
@@ -519,7 +537,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -642,6 +660,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A08C7C3318B496E50045E499 /* BusDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A08C7C3418B496E50045E499 /* BusDataModel.xcdatamodel */,
+			);
+			currentVersion = A08C7C3418B496E50045E499 /* BusDataModel.xcdatamodel */;
+			path = BusDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A0CFA5361819783800EAB2F6 /* Project object */;
 }

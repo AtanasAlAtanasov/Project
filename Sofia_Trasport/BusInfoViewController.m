@@ -7,8 +7,10 @@
 //
 
 #import "BusInfoViewController.h"
+#import "BusClass.h"
 #import "ViewController.h"
 #import "PinClass.h"
+#import "AppDelegate.h"
 
 #import "TFHpple.h"
 #import "Tutorial.h"
@@ -25,14 +27,18 @@
 @property (nonatomic, strong) NSString *cookieMonster;
 @property (nonatomic, strong) NSString *bodyCheck;
 
+
 @end
 
 @implementation BusInfoViewController
-@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView,textCodeView,url,stringCodeCheck,textForBus;
+@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView,textCodeView,url,stringCodeCheck,textForBus,fetchedResultsController,managedObjectContext,managedObjectModel,persistentStoreCoordinator;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    AppDelegate* appDelegate  = [UIApplication sharedApplication].delegate;
+    self.managedObjectContext = appDelegate.managedObjectContext;
     
     lableName.text = nameOfStop;
     lableCode.text = codeOfStop;
@@ -131,35 +137,45 @@
         [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             // NSLog(@"Data: %@",operation.responseString);
-            textForBus.text = operation.responseString;
+            //textForBus.text = operation.responseString;
             //NSLog(@"text for parse: %@",operation.responseString);
+            if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
+            NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
+            NSString *stopsXpathQueryString = @"//div[starts-with(@class,'arrivals')]//b";
             
             
-            NSString *searchedString = operation.responseString;
-            NSRange   searchedRange = NSMakeRange(0, [searchedString length]);
-            NSString *pattern = @"(\\<b>)(.{1,})(\\</b>)";//@"(?:www\\.)?((?!-)[a-zA-Z0-9-]{2,63}(?<!-))\\.?((?:[a-zA-Z0-9]{2,})?(?:\\.[a-zA-Z0-9]{2,})?)";
-            NSError  *myError = nil;
-            
-            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: pattern options:0 error:&myError];
-            NSArray* matches = [regex matchesInString:searchedString options:0 range: searchedRange];
-            for (NSTextCheckingResult* match in matches) {
-                //NSString* matchText = [searchedString substringWithRange:[match range]];
-                //NSLog(@"match2: %@", matchText);
-                NSRange group2 = [match rangeAtIndex:2];
-                //NSLog(@"group1: %@", [searchedString substringWithRange:group1]);
-                NSLog(@"group2: %@", [searchedString substringWithRange:group2]);
-
+            NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
+            NSMutableArray *arrForUser = nil;
+            arrForUser = [[NSMutableArray alloc] init];
+            for (TFHppleElement *element in stopsNodes) {
+                
+                Tutorial *transportStop = [[Tutorial alloc] init];
+                
+                transportStop.title = [[element firstChild] content];
+                
+                stringForParse = transportStop.title;
+                
+                [arrForUser addObject:stringForParse];
+                
             }
-            
-            NSArray *resultArray;
-            resultArray = [operation.responseString componentsSeparatedByString:@" "];
+
             int a = 0;
-            for(NSString * str in resultArray){
-                //NSLog(@"Array %d: %@",a,[resultArray objectAtIndex:a]);
+            for(NSString * str in arrForUser){
+                NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
+                NSString *myString = [arrForUser objectAtIndex:a];
+                textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
                 a++;
                 
             }
-            
+            [textCodeView resignFirstResponder];
+            }
+            else {
+                textForBus.text = @"В момента нямаме информация. Моля, опитайте по-късно.";
+                [textCodeView resignFirstResponder];
+
+            }
         }];
     } else {
         //Има символите от
@@ -169,19 +185,25 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             // NSLog(@"Data: %@", operation.responseString);
             self.textForBus.hidden = NO;
-            textForBus.text = operation.responseString;
+            //textForBus.text = operation.responseString;
             
             
-            NSLog(@"text for parse: %@",operation.responseString);
+            //NSLog(@"text for parse: %@",operation.responseString);
             
-            
+            if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
             
             TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
             NSString *stopsXpathQueryString = @"//div[starts-with(@class,'arrivals')]//b";
-            
-            
+            NSString *infoXpathQueryString = @"//div[starts-with(@class,'arr_info_1')]";
+
             NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
+            NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
+            //NSLog(@"huuuuum: %@",infoNodes);
+            NSMutableArray *arrForUser = nil;
+            arrForUser = [[NSMutableArray alloc] init];
+            NSMutableArray *arrInfoForUser = nil;
+            arrInfoForUser = [[NSMutableArray alloc] init];
             for (TFHppleElement *element in stopsNodes) {
                 
                 Tutorial *transportStop = [[Tutorial alloc] init];
@@ -189,54 +211,46 @@
                 transportStop.title = [[element firstChild] content];
                 
                 stringForParse = transportStop.title;
-                NSLog(@"stringgg: %@",stringForParse);
-                //parseStings = [stringForParse componentsSeparatedByString:@"\""];
                 
-//                NSUInteger a=0;
-//                a = [parseStings count];
-//                
-//                if(a == 9) {
-//                    latitude = (NSString*) [parseStings objectAtIndex:5];
-//                    longitude = (NSString*) [parseStings objectAtIndex:7];
-//                    stopCode = (NSString*) [parseStings objectAtIndex:1];
-//                    stopName = (NSString*) [parseStings objectAtIndex:3];
-//                    [self makePin];
-//                }
+                [arrForUser addObject:stringForParse];
                 
             }
-            
-//            NSString *searchedString = operation.responseString;
-//            NSRange   searchedRange = NSMakeRange(0, [searchedString length]);
-//            NSString *pattern = @"((<b>)(.{1,})(</b>))";
-//            //@"(?:www\\.)?((?!-)[a-zA-Z0-9-]{2,63}(?<!-))\\.?((?:[a-zA-Z0-9]{2,})?(?:\\.[a-zA-Z0-9]{2,})?)";
-//            NSError  *myError = nil;
-//            NSLog(@"humm: %@",searchedString);
-//            NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern: pattern options:0 error:&myError];
-//                NSArray* matches = [regex matchesInString:searchedString options:0 range: searchedRange];
-//                for (NSTextCheckingResult* match in matches) {
-//                    //NSString* matchText = [searchedString substringWithRange:[match range]];
-//                    //NSLog(@"match1: %@", matchText);
-//                    //NSRange group1 = [match rangeAtIndex:1];
-//                    NSRange group2 = [match rangeAtIndex:1];
-//                    //NSLog(@"group1: %@", [searchedString substringWithRange:group1]);
-//                    NSLog(@"group2: %@", [searchedString substringWithRange:group2]);
-//                    
-//                }
-            
-            NSArray *resultArray;
-            resultArray = [operation.responseString componentsSeparatedByString:@" "];
+            for (TFHppleElement *element in infoNodes) {
+                
+                Tutorial *transportStop = [[Tutorial alloc] init];
+                
+                transportStop.title = [[element firstChild] content];
+                
+                stringForParse = transportStop.title;
+                
+                [arrInfoForUser addObject:stringForParse];
+                
+            }
             int a = 0;
-            for(NSString * str in resultArray){
-                //NSLog(@"Array %d: %@",a,[resultArray objectAtIndex:a]);
+            for(NSString * str in arrForUser){
+                NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
+                //NSLog(@"Array %d: %@",a,[arrInfoForUser objectAtIndex:a]);
+                NSString *myString = [arrForUser objectAtIndex:a];
+                textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
                 a++;
                 
             }
+            int b = 0;
+            for(NSString * str in arrInfoForUser){
+                NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
+                b++;
+                
+            }
             [textCodeView resignFirstResponder];
-            
+         
+            } else {
+                textForBus.text = @"В момента нямаме информация. Моля, опитайте по-късно.";
+                [textCodeView resignFirstResponder];
+            }
         }];
-
+        
     }
-
+    
     return [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
     
 }
@@ -246,6 +260,31 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"BusData"
+                                                            inManagedObjectContext:self.managedObjectContext];
+        newEntry.name = self.lableName.text;
+        newEntry.code = self.lableCode.text;
+        
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
+        [self.view endEditing:YES];
+    }
+}
+
+- (IBAction)favButton:(id)sender {
+    
+    NSString *massageStr = [NSString stringWithFormat:@"Do you really want to add %@",lableName.text];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Bus Stop?" message:massageStr delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+    [alert show];
+
+    
 }
 
 - (IBAction)backButton:(id)sender {
