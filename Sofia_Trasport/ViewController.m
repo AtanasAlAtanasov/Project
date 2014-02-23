@@ -80,11 +80,8 @@
     for (TFHppleElement *element in stopsNodes) {
         
         Tutorial *transportStop = [[Tutorial alloc] init];
-        
         transportStop.title = [[element firstChild] content];
-        
         stringForParse = transportStop.title;
-        //NSLog(@"stringgg: %@",stringForParse);
         parseStings = [stringForParse componentsSeparatedByString:@"\""];
         
         NSUInteger a=0;
@@ -99,6 +96,15 @@
         }
 
     }
+    MKCoordinateRegion regionUser;
+    regionUser.center.latitude = myCurLatitude;
+    regionUser.center.longitude = myCurLongitude;
+    regionUser.span.latitudeDelta = 0.01f;
+    regionUser.span.longitudeDelta = 0.01f;
+    self.MapContorller.showsUserLocation = YES;
+    [self.MapContorller setRegion:regionUser animated:NO];
+    [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:NO];
+    
 }
 
 
@@ -113,7 +119,7 @@
         UIButton * disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
         [disclosureButton addTarget:self
-                             action:@selector(presentMoreInfo)
+                             action:@selector(self)
                    forControlEvents:UIControlEventTouchUpInside];
         
         pinView.rightCalloutAccessoryView = disclosureButton;
@@ -137,7 +143,6 @@
     region.center.longitude = myLongitude;
     region.span.latitudeDelta = 0.01f;
     region.span.longitudeDelta = 0.01f;
-    [self.MapContorller setRegion:region animated:YES];
     
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
@@ -157,13 +162,6 @@
 
 }
 
--(void)presentMoreInfo
- {
-    
-     //BusInfoViewController *tagEditor = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
-     //[self presentModalViewController:tagEditor animated:YES];
-    
-}
 
 
 - (void)locationManager:(CLLocationManager *)manager

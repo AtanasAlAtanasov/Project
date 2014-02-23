@@ -9,6 +9,7 @@
 #import "FavoriteViewController.h"
 #import "AppDelegate.h"
 #import "BusClass.h"
+#import "BusInfoViewController.h"
 
 @interface FavoriteViewController ()
 
@@ -54,29 +55,25 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
+
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    //[tableView setEditing:YES animated:YES];
+
     return [self.fetchedRecordsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //[tableView setEditing:YES animated:YES];
+    
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     BusClass * busData = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
     NSLog(@"name :%@",busData.name);
     cell.textLabel.text = [NSString stringWithFormat:@"%@",busData.name];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",busData.code];
-    // Configure the cell...
     
     return cell;
 }
@@ -86,18 +83,20 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
        
-        
-        
+                
         //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
         
         //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
         
-        BusClass *punToDelete = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
-        NSLog(@"Deleting (%@)", punToDelete.name);
+        //BusClass *punToDelete = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
+//        NSLog(@"Deleting (%@)", punToDelete.name);
         
+        //[punToDelete.name delete:indexPath];
+        
+        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         //[self.fetchedRecordsArray delete:indexPath];
         
-        NSLog(@"all :%@",self.fetchedRecordsArray);
+        //NSLog(@"all :%@",self.fetchedRecordsArray);
         
         
         //NSManagedObject *managedObject = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
@@ -108,7 +107,20 @@
        //[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
     }
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.section == 0) {
+        
+        BusInfoViewController *busView = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
+         BusClass * busData = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
+        busView.nameOfStop = busData.name;
+        busView.codeOfStop = busData.code;
+        [self presentModalViewController:busView animated:YES];
 
+    
+    }
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A05788AD181A75D100955FEE /* PinClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A05788AC181A75D100955FEE /* PinClass.m */; };
 		A05AA4A1185B071200555E68 /* BusInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05AA4A0185B071200555E68 /* BusInfoViewController.m */; };
+		A08588B518B921430099F5D7 /* favorite_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A08588B418B921430099F5D7 /* favorite_icon.png */; };
+		A08588B718B921900099F5D7 /* basic1-136_heart_favorite_list-512.png in Resources */ = {isa = PBXBuildFile; fileRef = A08588B618B921900099F5D7 /* basic1-136_heart_favorite_list-512.png */; };
+		A08588B918B921E00099F5D7 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = A08588B818B921E00099F5D7 /* location.png */; };
 		A08C7C3218B496C20045E499 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08C7C3118B496C20045E499 /* CoreData.framework */; };
 		A08C7C3518B496E50045E499 /* BusDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A08C7C3318B496E50045E499 /* BusDataModel.xcdatamodeld */; };
 		A08C7C6118B558860045E499 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A08C7C6018B558860045E499 /* CoreGraphics.framework */; };
@@ -63,6 +66,9 @@
 		A05788AC181A75D100955FEE /* PinClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinClass.m; sourceTree = "<group>"; };
 		A05AA49F185B071200555E68 /* BusInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusInfoViewController.h; sourceTree = "<group>"; };
 		A05AA4A0185B071200555E68 /* BusInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoViewController.m; sourceTree = "<group>"; };
+		A08588B418B921430099F5D7 /* favorite_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorite_icon.png; sourceTree = "<group>"; };
+		A08588B618B921900099F5D7 /* basic1-136_heart_favorite_list-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic1-136_heart_favorite_list-512.png"; sourceTree = "<group>"; };
+		A08588B818B921E00099F5D7 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
 		A08C7C3118B496C20045E499 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A08C7C3418B496E50045E499 /* BusDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BusDataModel.xcdatamodel; sourceTree = "<group>"; };
 		A08C7C6018B558860045E499 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -244,6 +250,9 @@
 		A0CFA5481819783800EAB2F6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A08588B818B921E00099F5D7 /* location.png */,
+				A08588B618B921900099F5D7 /* basic1-136_heart_favorite_list-512.png */,
+				A08588B418B921430099F5D7 /* favorite_icon.png */,
 				A0D49FA71867734100A153DF /* icon1.png */,
 				A0CFA5491819783800EAB2F6 /* Sofia Transport-Info.plist */,
 				A0CFA54A1819783800EAB2F6 /* InfoPlist.strings */,
@@ -375,8 +384,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0CFA55A1819783800EAB2F6 /* Images.xcassets in Resources */,
+				A08588B718B921900099F5D7 /* basic1-136_heart_favorite_list-512.png in Resources */,
 				A0CFA54C1819783800EAB2F6 /* InfoPlist.strings in Resources */,
 				A0D49FA81867734100A153DF /* icon1.png in Resources */,
+				A08588B918B921E00099F5D7 /* location.png in Resources */,
+				A08588B518B921430099F5D7 /* favorite_icon.png in Resources */,
 				A0CFA5551819783800EAB2F6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,7 +516,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -537,7 +549,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

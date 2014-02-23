@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @interface FavoriteViewController : UITableViewController
 
 - (IBAction)backButton:(id)sender;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 
 @end

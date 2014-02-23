@@ -21,7 +21,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shf-Ba-JT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-680" y="22"/>
+            <point key="canvasLocation" x="-658" y="22"/>
         </scene>
         <!--Load View Controller-->
         <scene sceneID="9mR-BV-HSU">
@@ -57,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wes-eL-hj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-253" y="22"/>
+            <point key="canvasLocation" x="-231" y="22"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -79,13 +79,13 @@
                                 <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Location" id="4ed-PM-2M5">
+                                    <barButtonItem image="location.png" id="4ed-PM-2M5">
                                         <connections>
                                             <action selector="myLocation:" destination="vXZ-lx-hvc" id="hsk-mh-zU2"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="oZ1-M1-wZu"/>
-                                    <barButtonItem title="&lt;3 List" id="SfZ-du-aJg">
+                                    <barButtonItem image="basic1-136_heart_favorite_list-512.png" id="SfZ-du-aJg">
                                         <connections>
                                             <segue destination="dXi-aA-TZc" kind="modal" id="dkd-Vm-Usp"/>
                                         </connections>
@@ -195,7 +195,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="fB1-3G-hDg"/>
-                                    <barButtonItem title="&lt;3" id="iFd-iC-WfM">
+                                    <barButtonItem image="favorite_icon.png" id="iFd-iC-WfM">
                                         <connections>
                                             <action selector="favButton:" destination="4xI-w7-a3v" id="G12-uU-3Dw"/>
                                         </connections>
@@ -275,6 +275,11 @@
             <point key="canvasLocation" x="534" y="22"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="basic1-136_heart_favorite_list-512.png" width="30" height="30"/>
+        <image name="favorite_icon.png" width="30" height="30"/>
+        <image name="location.png" width="30" height="30"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

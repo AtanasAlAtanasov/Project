@@ -79,15 +79,12 @@
        
     } else {
         self.textForBus.hidden=YES;
-        if ([parseString[2] rangeOfString:@"/captcha"].location == NSNotFound) {
-            //NSLog(@"Няма");
-        } else {
-            //NSLog(@"Има");
+        if ([parseString[2] rangeOfString:@"/captcha"].location != NSNotFound) {
+            
             stringForParse=[parseString[2] substringToIndex:41];
             NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg"];
             myUrl = [NSString stringWithFormat:@"%@%@",first,stringForParse];
             stringCodeCheck = [stringForParse  substringFromIndex:9];
-            //first = [NSString stringWithFormat:@"\""];
             NSURL *urlAdress = [NSURL URLWithString:myUrl];
             NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
             [codeWebView loadRequest:requestObj];
@@ -103,7 +100,7 @@
 }
 - (IBAction)checkButton:(id)sender {
     [self postDataFrom:url];
-    //NSLog(@"code %@",textCodeView.text);
+    
 }
 
 - (NSString *) postDataFrom:(NSString *)myUrl
@@ -132,13 +129,11 @@
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
-       //Няма символите от
+        NSLog(@"sec go");
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            // NSLog(@"Data: %@",operation.responseString);
-            //textForBus.text = operation.responseString;
-            //NSLog(@"text for parse: %@",operation.responseString);
+
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
             
@@ -178,17 +173,12 @@
             }
         }];
     } else {
-        //Има символите от
+        NSLog(@"first go");
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"};
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            // NSLog(@"Data: %@", operation.responseString);
             self.textForBus.hidden = NO;
-            //textForBus.text = operation.responseString;
-            
-            
-            //NSLog(@"text for parse: %@",operation.responseString);
             
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
@@ -199,37 +189,27 @@
 
             NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
             NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
-            //NSLog(@"huuuuum: %@",infoNodes);
             NSMutableArray *arrForUser = nil;
             arrForUser = [[NSMutableArray alloc] init];
             NSMutableArray *arrInfoForUser = nil;
             arrInfoForUser = [[NSMutableArray alloc] init];
             for (TFHppleElement *element in stopsNodes) {
-                
                 Tutorial *transportStop = [[Tutorial alloc] init];
-                
                 transportStop.title = [[element firstChild] content];
-                
                 stringForParse = transportStop.title;
-                
                 [arrForUser addObject:stringForParse];
                 
             }
             for (TFHppleElement *element in infoNodes) {
-                
                 Tutorial *transportStop = [[Tutorial alloc] init];
-                
                 transportStop.title = [[element firstChild] content];
-                
                 stringForParse = transportStop.title;
-                
                 [arrInfoForUser addObject:stringForParse];
                 
             }
             int a = 0;
             for(NSString * str in arrForUser){
                 NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
-                //NSLog(@"Array %d: %@",a,[arrInfoForUser objectAtIndex:a]);
                 NSString *myString = [arrForUser objectAtIndex:a];
                 textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
                 a++;
@@ -270,6 +250,7 @@
         newEntry.code = self.lableCode.text;
         
         NSError *error;
+        
         if (![self.managedObjectContext save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
