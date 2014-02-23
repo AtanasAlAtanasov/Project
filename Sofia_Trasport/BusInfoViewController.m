@@ -131,8 +131,9 @@
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
         NSLog(@"sec go");
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, NSError *error ) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, id responseObject) {
 
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];

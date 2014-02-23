@@ -12,5 +12,9 @@
 
 @dynamic name;
 @dynamic code;
+@dynamic loadName;
+@dynamic loadCode;
+@dynamic latitude;
+@dynamic longitude;
 
 @end

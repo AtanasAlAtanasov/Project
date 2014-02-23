@@ -19,6 +19,7 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator ;
 
 -(NSArray*)getAllBusRecords;
+-(NSArray*)getAllBusStops;
 
 
 @end

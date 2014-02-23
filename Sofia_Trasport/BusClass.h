@@ -13,5 +13,9 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * code;
+@property (nonatomic, retain) NSString * loadName;
+@property (nonatomic, retain) NSString * loadCode;
+@property (nonatomic, retain) NSString * latitude;
+@property (nonatomic, retain) NSString * longitude;
 
 @end

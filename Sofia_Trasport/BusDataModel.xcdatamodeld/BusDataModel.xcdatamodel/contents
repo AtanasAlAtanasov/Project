@@ -4,7 +4,14 @@
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="LoadStops" syncable="YES">
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loadCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loadName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="BusData" positionX="-3483" positionY="-243" width="128" height="73"/>
+        <element name="BusData" positionX="-3483" positionY="-234" width="128" height="73"/>
+        <element name="LoadStops" positionX="-3683" positionY="-243" width="128" height="105"/>
     </elements>
 </model>

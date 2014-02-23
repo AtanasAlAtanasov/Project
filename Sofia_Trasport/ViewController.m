@@ -12,18 +12,27 @@
 #import "Contributor.h"
 #import "PinClass.h"
 #import "BusInfoViewController.h"
+#import "BusClass.h"
+#import "AppDelegate.h"
 
 @interface ViewController ()
+@property (nonatomic,strong)NSMutableArray* fetchedRecordsArrayStops;
 
 @end
 
 @implementation ViewController
 
-@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager,managedObjectContext,fetchedRecordsArrayStops,fetchedResultsController,managedObjectModel,persistentStoreCoordinator;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    AppDelegate* appDelegate  = [UIApplication sharedApplication].delegate;
+    self.managedObjectContext = appDelegate.managedObjectContext;
+    
+    self.fetchedRecordsArrayStops = [[NSMutableArray alloc] init];
+    [self.fetchedRecordsArrayStops addObjectsFromArray:[appDelegate getAllBusStops]];
+    
     self.MapContorller.delegate=self;
     //[self loadStops];
     locationManager = [[CLLocationManager alloc] init];
@@ -32,12 +41,22 @@
     NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
     NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
     
-    if (loadTest == nil) {
+    if([self.fetchedRecordsArrayStops count] != 0){
+        
+        BusClass * busData = [self.fetchedRecordsArrayStops objectAtIndex:3];
+        NSLog(@"bus data :%@",busData);
+        if(busData.loadName == NULL){
+            [self loadStops];
+        } else {
+            [self makePinCoreData];
+        }
+    } else if (loadTest == nil) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
         [alert show];
     } else {
-        [self loadStops];
+         [self loadStops];
     }
+    
 }
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
@@ -45,7 +64,16 @@
         NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
         NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
         
-        if (loadTest == nil) {
+        if([self.fetchedRecordsArrayStops count] != 0){
+            
+            BusClass * busData = [self.fetchedRecordsArrayStops objectAtIndex:3];
+            NSLog(@"bus data :%@",busData);
+            if(busData.loadName == NULL){
+                [self loadStops];
+            } else {
+                [self makePinCoreData];
+            }
+        } else if (loadTest == nil) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
             [alert show];
         } else {
@@ -92,9 +120,10 @@
             longitude = (NSString*) [parseStings objectAtIndex:7];
             stopCode = (NSString*) [parseStings objectAtIndex:1];
             stopName = (NSString*) [parseStings objectAtIndex:3];
+            
             [self makePin];
+            
         }
-
     }
     MKCoordinateRegion regionUser;
     regionUser.center.latitude = myCurLatitude;
@@ -131,8 +160,19 @@
     
 }
 
--(void)makePin {
+-(void)makePinCoreData {
     
+    NSLog(@"coredata");
+    BusClass * busData = [NSEntityDescription insertNewObjectForEntityForName:@"LoadStops"
+                                                       inManagedObjectContext:self.managedObjectContext];
+    for (int inex = 0;inex<[self.fetchedRecordsArrayStops count];inex++){
+    busData = [self.fetchedRecordsArrayStops objectAtIndex:inex];
+        NSLog(@"dataaa :%@",busData.loadName);
+        latitude = busData.latitude;
+        longitude = busData.longitude;
+        stopCode = busData.loadCode;
+        stopName = busData.loadName;
+
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
     myCurLatitude = myLatitude;
@@ -149,8 +189,48 @@
     ann.title = stopName;
     NSString * zeros = @"00000";
     ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
-    [self.MapContorller addAnnotation:ann];
+
     
+    [self.MapContorller addAnnotation:ann];
+    }
+    
+}
+
+-(void)makePin {
+    NSLog(@" no coredata");
+    double myLatitude = [latitude doubleValue];
+    double myLongitude = [longitude doubleValue];
+    myCurLatitude = myLatitude;
+    myCurLongitude = myLongitude;
+    
+    MKCoordinateRegion region;
+    region.center.latitude = myLatitude;
+    region.center.longitude = myLongitude;
+    region.span.latitudeDelta = 0.01f;
+    region.span.longitudeDelta = 0.01f;
+    
+    PinClass *ann = [[PinClass alloc] init];
+    ann.coordinate = region.center;
+    ann.title = stopName;
+    NSString * zeros = @"00000";
+    ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
+    
+    BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"LoadStops"
+                                                        inManagedObjectContext:self.managedObjectContext];
+    
+    newEntry.loadName = ann.title;
+    newEntry.loadCode = ann.subtitle;
+    newEntry.latitude = latitude;
+    newEntry.longitude = longitude;
+    NSError *error;
+    
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    NSLog(@"save data :%@",newEntry);
+    [self.view endEditing:YES];
+    [self.MapContorller addAnnotation:ann];
+
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control

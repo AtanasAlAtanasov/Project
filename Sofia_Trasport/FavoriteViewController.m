@@ -39,7 +39,7 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
     // Fetching Records and saving it in "fetchedRecordsArray" object
-    [self.fetchedRecordsArray addObjectsFromArray:[appDelegate getAllBusRecords]];
+    [self.fetchedRecordsArray addObjectsFromArray:[appDelegate  getAllBusRecords]];
     //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
     [self.tableView reloadData];
  
