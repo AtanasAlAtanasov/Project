@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface FavoriteViewController : UITableViewController
+@interface FavoriteViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 - (IBAction)backButton:(id)sender;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-
+@property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end

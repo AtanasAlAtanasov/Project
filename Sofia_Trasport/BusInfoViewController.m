@@ -134,44 +134,86 @@
         [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, NSError *error ) {
             
         } failure:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+            
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
-            NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
-            
-            TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
-            NSString *stopsXpathQueryString = @"//div[starts-with(@class,'arrivals')]//b";
-            
-            
-            NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
-            NSMutableArray *arrForUser = nil;
-            arrForUser = [[NSMutableArray alloc] init];
-            for (TFHppleElement *element in stopsNodes) {
+                NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
+                //NSLog(@"Hpple :%@",operation.responseString);
                 
-                Tutorial *transportStop = [[Tutorial alloc] init];
+                TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
                 
-                transportStop.title = [[element firstChild] content];
+                NSArray * elements  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']"];
+                NSArray * elements1  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']/a/b"];
                 
-                stringForParse = transportStop.title;
+                NSString *allStr = [NSString stringWithFormat:@""];
+                for(int attr = 0;attr<elements.count;attr++){
+                    TFHppleElement * element = [elements objectAtIndex:attr];
+                    TFHppleElement * element1 = [elements1 objectAtIndex:attr];
+                    if([element1 text] != NULL){
+                        allStr = [NSString stringWithFormat:@"%@%@",allStr,[element1 text]];
+                    }
+                    NSArray * elementChild = [element children];
+                    
+                    
+                    for(int attr = 0;attr<elementChild.count;attr++){
+                        TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
+                        if([elementCh content] != NULL){
+                            allStr = [NSString stringWithFormat:@"%@%@",allStr,[elementCh content]];
+                            allStr = [NSString stringWithFormat:@"%@\n",allStr];
+                        }
+                        //NSLog(@"cont :%@",[elementCh content]);
+                        //NSLog(@"a :%@",[element tagName]);                     // "a"
+                        //NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
+                        //NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
+                        //NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
+                    }
+                }
                 
-                [arrForUser addObject:stringForParse];
+                textForBus.text = [NSString stringWithFormat:@"%@",allStr];
+                NSString *stopsXpathQueryString = @"//div[@class='arr_title_1']";
+                NSString *infoXpathQueryString = @"//div[@class='arr_info_1']";
                 
-            }
-
-            int a = 0;
-            for(NSString * str in arrForUser){
-                NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
-                NSString *myString = [arrForUser objectAtIndex:a];
-                textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
-                a++;
+                NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
+                NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
+                //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
+                NSMutableArray *arrForUser = nil;
+                arrForUser = [[NSMutableArray alloc] init];
+                NSMutableArray *arrInfoForUser = nil;
+                arrInfoForUser = [[NSMutableArray alloc] init];
+                for (TFHppleElement *element in stopsNodes) {
+                    Tutorial *transportStop = [[Tutorial alloc] init];
+                    transportStop.title = [[element firstChild] content];
+                    stringForParse = transportStop.title;
+                    [arrForUser addObject:stringForParse];
+                    
+                }
+                for (TFHppleElement *element in infoNodes) {
+                    Tutorial *transportStop = [[Tutorial alloc] init];
+                    transportStop.title = [[element firstChild] content];
+                    stringForParse = transportStop.title;
+                    [arrInfoForUser addObject:stringForParse];
+                    
+                }
+                int a = 0;
+                for(NSString * str in arrForUser){
+                    //NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
+                    NSString *myString = [arrForUser objectAtIndex:a];
+                    textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
+                    a++;
+                    
+                }
+                int b = 0;
+                for(NSString * str in arrInfoForUser){
+                    //NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
+                    b++;
+                    
+                }
+                [textCodeView resignFirstResponder];
                 
-            }
-            [textCodeView resignFirstResponder];
-            }
-            else {
+            } else {
                 textForBus.text = @"В момента нямаме информация. Моля, опитайте по-късно.";
                 [textCodeView resignFirstResponder];
-
             }
+
         }];
     } else {
         NSLog(@"first go");
@@ -185,11 +227,44 @@
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
             
             TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
-            NSString *stopsXpathQueryString = @"//div[starts-with(@class,'arrivals')]//b";
-            NSString *infoXpathQueryString = @"//div[starts-with(@class,'arr_info_1')]";
+            
+                NSArray * elements  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']"];
+                NSArray * elements1  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']/a/b"];
+                
+                NSString *allStr = [NSString stringWithFormat:@""];
+                for(int attr = 0;attr<elements.count;attr++){
+                TFHppleElement * element = [elements objectAtIndex:attr];
+                TFHppleElement * element1 = [elements1 objectAtIndex:attr];
+                    //NSLog(@"a :%@",[element1 text]);
+                    if([element1 text] != NULL){
+                    allStr = [NSString stringWithFormat:@"%@%@",allStr,[element1 text]];
+                    }
+                NSArray * elementChild = [element children];
+                    
+                    
+                    for(int attr = 0;attr<elementChild.count;attr++){
+                        TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
+                        if([elementCh content] != NULL){
+                        allStr = [NSString stringWithFormat:@"%@%@",allStr,[elementCh content]];
+                            allStr = [NSString stringWithFormat:@"%@\n",allStr];
+                        }
+                        //NSLog(@"cont :%@",[elementCh content]);
+//                NSLog(@"a :%@",[element tagName]);                     // "a"
+//                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
+//                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
+//                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
+                }
+                }
+                
+                textForBus.text = [NSString stringWithFormat:@"%@",allStr];
+                
+            NSString *stopsXpathQueryString = @"//div[starts-with(class,'arr_title_1')]";
+            NSString *infoXpathQueryString = @"//div[contains(string(@class),'arr_info_1')]";
 
             NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
             NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
+            //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
+            
             NSMutableArray *arrForUser = nil;
             arrForUser = [[NSMutableArray alloc] init];
             NSMutableArray *arrInfoForUser = nil;
@@ -218,7 +293,7 @@
             }
             int b = 0;
             for(NSString * str in arrInfoForUser){
-                NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
+                //NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
                 b++;
                 
             }
@@ -236,6 +311,24 @@
     
 }
 
+-(NSString*) getStringForTFHppleElement:(TFHppleElement *)element {
+    
+    NSMutableString *result = [NSMutableString new];
+    NSLog(@"?? :%@",element);
+    // Iterate recursively through all children
+    for (TFHppleElement *child in [element children]) {
+        [result appendString:[self getStringForTFHppleElement:child]];
+        NSLog(@"shit :%@",result);
+    }
+    
+    // Hpple creates a <text> node when it parses texts
+    if ([element.tagName isEqualToString:@"text"]){
+        [result appendString:element.content];
+        NSLog(@"res :%@",result);
+    }
+    
+    return result;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -262,8 +355,8 @@
 
 - (IBAction)favButton:(id)sender {
     
-    NSString *massageStr = [NSString stringWithFormat:@"Do you really want to add %@",lableName.text];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Bus Stop?" message:massageStr delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+    NSString *massageStr = [NSString stringWithFormat:@"Добавяне на, %@ към любими",lableName.text];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Добавяне в любими?" message:massageStr delegate:self cancelButtonTitle:@"Не" otherButtonTitles:@"Да",nil];
     [alert show];
 
     

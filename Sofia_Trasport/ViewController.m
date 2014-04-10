@@ -44,18 +44,18 @@
     if([self.fetchedRecordsArrayStops count] != 0){
         
         BusClass * busData = [self.fetchedRecordsArrayStops objectAtIndex:3];
-        NSLog(@"bus data :%@",busData);
         if(busData.loadName == NULL){
             [self loadStops];
         } else {
             [self makePinCoreData];
         }
     } else if (loadTest == nil) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Няма връска с интернет!" message:@"Не може да бъде установена връска с интернет."  delegate:self cancelButtonTitle:@"Добре" otherButtonTitles: @"Презареждане", nil];
         [alert show];
     } else {
          [self loadStops];
     }
+    
     
 }
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -67,14 +67,13 @@
         if([self.fetchedRecordsArrayStops count] != 0){
             
             BusClass * busData = [self.fetchedRecordsArrayStops objectAtIndex:3];
-            NSLog(@"bus data :%@",busData);
             if(busData.loadName == NULL){
                 [self loadStops];
             } else {
                 [self makePinCoreData];
             }
         } else if (loadTest == nil) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Network Connection!" message:@"Cannot establish internet connection."  delegate:self cancelButtonTitle:@"OK" otherButtonTitles: @"Refresh", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Няма връска с интернет!" message:@"Не може да бъде установена връска с интернет."  delegate:self cancelButtonTitle:@"Добре" otherButtonTitles: @"Презареждане", nil];
             [alert show];
         } else {
             [self loadStops];
@@ -162,12 +161,10 @@
 
 -(void)makePinCoreData {
     
-    NSLog(@"coredata");
     BusClass * busData = [NSEntityDescription insertNewObjectForEntityForName:@"LoadStops"
                                                        inManagedObjectContext:self.managedObjectContext];
     for (int inex = 0;inex<[self.fetchedRecordsArrayStops count];inex++){
     busData = [self.fetchedRecordsArrayStops objectAtIndex:inex];
-        NSLog(@"dataaa :%@",busData.loadName);
         latitude = busData.latitude;
         longitude = busData.longitude;
         stopCode = busData.loadCode;
@@ -187,17 +184,28 @@
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     ann.title = stopName;
-    NSString * zeros = @"00000";
-    ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
+        NSString *zeros = @"";
+        if(stopCode.length==1){
+            zeros = @"000";
+        } else if (stopCode.length == 2){
+            zeros = @"00";
+        } else if (stopCode.length == 3){
+            zeros = @"0";
+        } else if (stopCode.length == 4){
+            zeros = @"";
+        }
+        ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros,stopCode];
+
 
     
     [self.MapContorller addAnnotation:ann];
+        
     }
     
 }
 
 -(void)makePin {
-    NSLog(@" no coredata");
+
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
     myCurLatitude = myLatitude;
@@ -212,8 +220,19 @@
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     ann.title = stopName;
-    NSString * zeros = @"00000";
-    ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros ,stopCode];
+    //NSString * zeros = @"00000";
+    //NSLog(@"len :%lu",(unsigned long)stopCode.length);
+    NSString *zeros = @"";
+    if(stopCode.length==1){
+        zeros = @"000";
+    } else if (stopCode.length == 2){
+        zeros = @"00";
+    } else if (stopCode.length == 3){
+        zeros = @"0";
+    } else if (stopCode.length == 4){
+        zeros = @"";
+    }
+    ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros,stopCode];
     
     BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"LoadStops"
                                                         inManagedObjectContext:self.managedObjectContext];
@@ -227,7 +246,7 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-    NSLog(@"save data :%@",newEntry);
+    
     [self.view endEditing:YES];
     [self.MapContorller addAnnotation:ann];
 
