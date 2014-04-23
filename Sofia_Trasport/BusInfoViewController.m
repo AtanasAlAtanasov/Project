@@ -345,7 +345,6 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"BusData" inManagedObjectContext:self.managedObjectContext];
         
         // If appropriate, configure the new managed object.
@@ -356,35 +355,39 @@
         // Save the context.
         NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+           
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
         
-        NSLog(@"mana :%@",self.managedObjectContext);
-        
-      /*  BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"BusData"
-                                                            inManagedObjectContext:self.managedObjectContext];
-        newEntry.name = self.lableName.text;
-        newEntry.code = self.lableCode.text;
-        
-        NSError *error;
-        
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-        
-        [self.view endEditing:YES];
-       */
     }
 }
 
 - (IBAction)favButton:(id)sender {
+    NSMutableArray * mutableArr = [[NSMutableArray alloc] init];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     
+    // Fetching Records and saving it in "fetchedRecordsArray" object
+    [mutableArr addObjectsFromArray:[appDelegate  getAllBusRecords]];
+    int checkEqual=0;
+    for (int a=0;a<mutableArr.count;a++){
+    BusClass * busData = [mutableArr objectAtIndex:a];
+    NSLog(@"arr :%@",busData.name);
+        if([busData.name isEqualToString:self.lableName.text]){
+            if([busData.code isEqualToString:self.lableCode.text])
+            checkEqual = 1;
+        }
+        
+    }
+    if(checkEqual == 0){
     NSString *massageStr = [NSString stringWithFormat:@"Добавяне на, %@ към любими",lableName.text];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Добавяне в любими?" message:massageStr delegate:self cancelButtonTitle:@"Не" otherButtonTitles:@"Да",nil];
     [alert show];
+    } else if (checkEqual == 1) {
+        NSString *massageStr = [NSString stringWithFormat:@"Спирка, %@ вече е в любими",lableName.text];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:massageStr delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+    }
 
     
 }
