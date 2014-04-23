@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "FavoriteViewController.h"
+#import "ViewController.h"
 
 @implementation AppDelegate
 @synthesize managedObjectContext,managedObjectModel,persistentStoreCoordinator;
@@ -14,6 +16,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    FavoriteViewController *controller = [[FavoriteViewController alloc] init];
+    controller.managedObjectContext = self.managedObjectContext;
+    
     return YES;
 }
 							
@@ -42,7 +47,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self saveContext];
 }
+
 
 -(NSArray*)getAllBusRecords {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -88,36 +95,105 @@
     
     return managedObjectContext;
 }
-
-- (NSManagedObjectModel *)managedObjectModel {
+- (NSManagedObjectModel *)managedObjectModel
+{
     if (managedObjectModel != nil) {
         return managedObjectModel;
     }
-    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"BusDataModel" withExtension:@"momd"];
+    managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return managedObjectModel;
 }
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+//- (NSManagedObjectModel *)managedObjectModel {
+//    if (managedObjectModel != nil) {
+//        return managedObjectModel;
+//    }
+//    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+//    
+//    return managedObjectModel;
+//}
+
+- (void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContexts = self.managedObjectContext;
+    if (managedObjectContexts != nil) {
+        if ([managedObjectContexts hasChanges] && ![managedObjectContexts save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
     if (persistentStoreCoordinator != nil) {
         return persistentStoreCoordinator;
     }
-    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory]
-                                               stringByAppendingPathComponent: @"BusDataModel.sqlite"]];
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"BusDataModel.sqlite"];
+    
     NSError *error = nil;
-    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]
-                                   initWithManagedObjectModel:[self managedObjectModel]];
-    if(![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
-                                                  configuration:nil URL:storeUrl options:nil error:&error]) {
-        /*Error for store creation should be handled in here*/
+    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+         
+         Typical reasons for an error here include:
+         * The persistent store is not accessible;
+         * The schema for the persistent store is incompatible with current managed object model.
+         Check the error message to determine what the actual problem was.
+         
+         
+         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+         
+         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+         * Simply deleting the existing store:
+         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+         
+         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
+         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
+         
+         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+         
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
     }
     
     return persistentStoreCoordinator;
 }
 
-- (NSString *)applicationDocumentsDirectory {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+//- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+//    if (persistentStoreCoordinator != nil) {
+//        return persistentStoreCoordinator;
+//    }
+//    NSURL *storeUrl = [NSURL fileURLWithPath: [[self applicationDocumentsDirectory]
+//                                               stringByAppendingPathComponent: @"BusDataModel.sqlite"]];
+//    NSError *error = nil;
+//    persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]
+//                                   initWithManagedObjectModel:[self managedObjectModel]];
+//    if(![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+//                                                  configuration:nil URL:storeUrl options:nil error:&error]) {
+//        /*Error for store creation should be handled in here*/
+//    }
+//    
+//    return persistentStoreCoordinator;
+//}
+
+//- (NSString *)applicationDocumentsDirectory {
+//    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//}
 
 
 @end

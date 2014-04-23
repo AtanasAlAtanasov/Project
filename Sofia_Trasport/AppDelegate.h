@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
-#import <CoreGraphics/CoreGraphics.h>
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -20,6 +19,5 @@
 
 -(NSArray*)getAllBusRecords;
 -(NSArray*)getAllBusStops;
-//- (NSURL *)applicationDocumentsDirectory;
 
 @end

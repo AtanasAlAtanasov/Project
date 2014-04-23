@@ -44,7 +44,8 @@
     lableCode.text = codeOfStop;
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?q="];
     NSString *last = [NSString stringWithFormat:@"&o=1&go=1"];
-    url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
+    NSString *busId = [NSString stringWithFormat:@"&vehicleTypeId=1"];
+    url = [NSString stringWithFormat:@"%@%@%@%@",first,codeOfStop,last,busId];
     [self getDataFrom:url];
  
 }
@@ -74,13 +75,14 @@
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
+        
         [self postDataFrom:url];
         
        
     } else {
         self.textForBus.hidden=YES;
         if ([parseString[2] rangeOfString:@"/captcha"].location != NSNotFound) {
-            
+           
             stringForParse=[parseString[2] substringToIndex:41];
             NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg"];
             myUrl = [NSString stringWithFormat:@"%@%@",first,stringForParse];
@@ -149,24 +151,27 @@
                     TFHppleElement * element = [elements objectAtIndex:attr];
                     TFHppleElement * element1 = [elements1 objectAtIndex:attr];
                     if([element1 text] != NULL){
-                        allStr = [NSString stringWithFormat:@"%@%@",allStr,[element1 text]];
+                        NSString* delStr = [[element1 text] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                        allStr = [NSString stringWithFormat:@"%@%@",allStr,delStr];
                     }
                     NSArray * elementChild = [element children];
-                    
-                    
                     for(int attr = 0;attr<elementChild.count;attr++){
                         TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
                         if([elementCh content] != NULL){
-                            allStr = [NSString stringWithFormat:@"%@%@",allStr,[elementCh content]];
-                            allStr = [NSString stringWithFormat:@"%@\n",allStr];
+                            NSString *deleteChar = [elementCh content];
+                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" " withString:@""];
+                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" - \n" withString:@""];
+                            allStr = [NSString stringWithFormat:@"%@%@",allStr,deleteChar];
                         }
-                        //NSLog(@"cont :%@",[elementCh content]);
-                        //NSLog(@"a :%@",[element tagName]);                     // "a"
-                        //NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
-                        //NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
-                        //NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
+                        //                NSLog(@"a :%@",[element tagName]);                     // "a"
+                        //                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
+                        //                NSLog(@"href :%@",[element objectForKey:@"href"]);     // Easy access to single attribute
+                        //                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
                     }
+                    allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
                 }
+                NSLog(@"all :%@",allStr);
+                allStr = [NSString stringWithFormat:@"Автобуси\n\n%@",allStr];
                 
                 textForBus.text = [NSString stringWithFormat:@"%@",allStr];
                 NSString *stopsXpathQueryString = @"//div[@class='arr_title_1']";
@@ -174,7 +179,6 @@
                 
                 NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
                 NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
-                //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
                 NSMutableArray *arrForUser = nil;
                 arrForUser = [[NSMutableArray alloc] init];
                 NSMutableArray *arrInfoForUser = nil;
@@ -235,26 +239,28 @@
                 for(int attr = 0;attr<elements.count;attr++){
                 TFHppleElement * element = [elements objectAtIndex:attr];
                 TFHppleElement * element1 = [elements1 objectAtIndex:attr];
-                    //NSLog(@"a :%@",[element1 text]);
                     if([element1 text] != NULL){
-                    allStr = [NSString stringWithFormat:@"%@%@",allStr,[element1 text]];
+                        NSString* delStr = [[element1 text] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+                        allStr = [NSString stringWithFormat:@"%@%@",allStr,delStr];
                     }
                 NSArray * elementChild = [element children];
-                    
-                    
                     for(int attr = 0;attr<elementChild.count;attr++){
                         TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
                         if([elementCh content] != NULL){
-                        allStr = [NSString stringWithFormat:@"%@%@",allStr,[elementCh content]];
-                            allStr = [NSString stringWithFormat:@"%@\n",allStr];
+                            NSString *deleteChar = [elementCh content];
+                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" " withString:@""];
+                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" - \n" withString:@""];
+                            allStr = [NSString stringWithFormat:@"%@%@",allStr,deleteChar];
                         }
-                        //NSLog(@"cont :%@",[elementCh content]);
 //                NSLog(@"a :%@",[element tagName]);                     // "a"
 //                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
 //                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
 //                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
                 }
+                    allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
                 }
+                NSLog(@"all :%@",allStr);
+                allStr = [NSString stringWithFormat:@"Автобуси\n\n%@",allStr];
                 
                 textForBus.text = [NSString stringWithFormat:@"%@",allStr];
                 
@@ -338,7 +344,27 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"BusData"
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"BusData" inManagedObjectContext:self.managedObjectContext];
+        
+        // If appropriate, configure the new managed object.
+        // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+        [newManagedObject setValue:self.lableName.text forKey:@"name"];
+        [newManagedObject setValue:self.lableCode.text forKey:@"code"];
+
+        // Save the context.
+        NSError *error = nil;
+        if (![self.managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        
+        NSLog(@"mana :%@",self.managedObjectContext);
+        
+      /*  BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"BusData"
                                                             inManagedObjectContext:self.managedObjectContext];
         newEntry.name = self.lableName.text;
         newEntry.code = self.lableCode.text;
@@ -350,6 +376,7 @@
         }
         
         [self.view endEditing:YES];
+       */
     }
 }
 

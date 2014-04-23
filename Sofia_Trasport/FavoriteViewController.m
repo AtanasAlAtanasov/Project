@@ -19,6 +19,15 @@
 
 @implementation FavoriteViewController
 @synthesize managedObjectContext,fetchedRecordsArray,fetchedResultsController;
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -37,12 +46,24 @@
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
+
     // Fetching Records and saving it in "fetchedRecordsArray" object
     [self.fetchedRecordsArray addObjectsFromArray:[appDelegate  getAllBusRecords]];
+    //NSLog(@"bussss :%@",self.fetchedRecordsArray);
     //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
     //[self.tableView reloadData];
  
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    // Fetch the devices from persistent data store
+    NSManagedObjectContext *managedObjectContexts = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"BusData"];
+    self.fetchedRecordsArray = [[managedObjectContexts executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,81 +104,23 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        // Delete object from database
         [context deleteObject:[self.fetchedRecordsArray objectAtIndex:indexPath.row]];
-        NSLog(@"cont: %@",context);
-        NSLog(@"fetch: %@",[fetchedRecordsArray objectAtIndex:indexPath.row]);
         
         NSError *error = nil;
         if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            [self.tableView reloadData];
+            NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+            return;
         }
+        
+        // Remove from table view
+        [self.fetchedRecordsArray removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
-
-
-//-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//       
-
-//        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-//        NSLog(@"cont :%@",context);
-        
-//        [self.managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-//        NSLog(@"log :%@",indexPath);
-        
-        //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        
-        //self.fetchedRecordsArray = [appDelegate getAllBusRecords];
-        
-        //BusClass *punToDelete = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
-//        NSLog(@"Deleting (%@)", punToDelete.name);
-        
-        //[punToDelete.name delete:indexPath];
-        
-       //[tableView deleteRowsAtIndexPaths :@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-       //[self.fetchedResultsController delete:indexPath];
-        
-        //NSLog(@"all :%@",self.fetchedRecordsArray);
-        
-        
-        //NSManagedObject *managedObject = [self.fetchedRecordsArray objectAtIndex:indexPath.row];
-        
-        //[self.fetchedRecordsArray delete:indexPath]; // deleteObject:managedObject];
-        //[self.tableView reloadData];
-        
-       //[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-        
-        
-//        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//        [context deleteObject:object];
-//        
-//        // Save
-//        NSError *error;
-//        if ([context save:&error] == NO) {
-//            // Handle Error.
-//        }
-        
-    //}
-//}
-
-//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-//       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-//      newIndexPath:(NSIndexPath *)newIndexPath
-//{
-//    if (type == NSFetchedResultsChangeDelete) {
-//        // Delete row from tableView.
-//        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-//                              withRowAnimation:UITableViewRowAnimationFade];
-//        [self.tableView reloadData];
-//    }
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -173,6 +136,9 @@
     
     }
 }
+
+
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
