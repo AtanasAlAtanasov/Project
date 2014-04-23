@@ -133,9 +133,9 @@
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
         NSLog(@"sec go");
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:myUrl parameters:nil success:^(AFHTTPRequestOperation *operation, NSError *error ) {
-            
-        } failure:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"go":@"1"};
+        [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
                 NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
@@ -165,7 +165,7 @@
                         }
                         //                NSLog(@"a :%@",[element tagName]);                     // "a"
                         //                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
-                        //                NSLog(@"href :%@",[element objectForKey:@"href"]);     // Easy access to single attribute
+                        //                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
                         //                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
                     }
                     allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
@@ -174,11 +174,14 @@
                 allStr = [NSString stringWithFormat:@"Автобуси\n\n%@",allStr];
                 
                 textForBus.text = [NSString stringWithFormat:@"%@",allStr];
-                NSString *stopsXpathQueryString = @"//div[@class='arr_title_1']";
-                NSString *infoXpathQueryString = @"//div[@class='arr_info_1']";
+                
+                NSString *stopsXpathQueryString = @"//div[starts-with(class,'arr_title_1')]";
+                NSString *infoXpathQueryString = @"//div[contains(string(@class),'arr_info_1')]";
                 
                 NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
                 NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
+                //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
+                
                 NSMutableArray *arrForUser = nil;
                 arrForUser = [[NSMutableArray alloc] init];
                 NSMutableArray *arrInfoForUser = nil;
@@ -199,12 +202,13 @@
                 }
                 int a = 0;
                 for(NSString * str in arrForUser){
-                    //NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
+                    NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
                     NSString *myString = [arrForUser objectAtIndex:a];
                     textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
                     a++;
                     
                 }
+
                 int b = 0;
                 for(NSString * str in arrInfoForUser){
                     //NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
@@ -229,7 +233,7 @@
             
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
-            
+
             TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
             
                 NSArray * elements  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']"];
@@ -295,12 +299,6 @@
                 NSString *myString = [arrForUser objectAtIndex:a];
                 textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
                 a++;
-                
-            }
-            int b = 0;
-            for(NSString * str in arrInfoForUser){
-                //NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
-                b++;
                 
             }
             [textCodeView resignFirstResponder];
