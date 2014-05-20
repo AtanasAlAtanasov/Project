@@ -17,5 +17,8 @@
 @property (nonatomic, retain) NSString * loadCode;
 @property (nonatomic, retain) NSString * latitude;
 @property (nonatomic, retain) NSString * longitude;
+@property (nonatomic, retain) NSString * captcha;
+@property (nonatomic, retain) NSString * captchaCode;
+
 
 @end

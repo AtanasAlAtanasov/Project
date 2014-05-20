@@ -19,5 +19,6 @@
 
 -(NSArray*)getAllBusRecords;
 -(NSArray*)getAllBusStops;
+-(NSArray*)getCookies;
 
 @end

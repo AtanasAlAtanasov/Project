@@ -130,8 +130,9 @@
     regionUser.span.latitudeDelta = 0.01f;
     regionUser.span.longitudeDelta = 0.01f;
     self.MapContorller.showsUserLocation = YES;
-    [self.MapContorller setRegion:regionUser animated:NO];
-    [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:NO];
+    [self.MapContorller setRegion:regionUser animated:YES];
+    [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
+    
     
 }
 

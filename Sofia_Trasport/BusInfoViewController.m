@@ -26,28 +26,29 @@
 
 @property (nonatomic, strong) NSString *cookieMonster;
 @property (nonatomic, strong) NSString *bodyCheck;
-
+@property (nonatomic, strong) NSString *allStr;
+@property (nonatomic) BOOL allVehicle;
 
 @end
 
 @implementation BusInfoViewController
-@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView,textCodeView,url,stringCodeCheck,textForBus,fetchedResultsController,managedObjectContext,managedObjectModel,persistentStoreCoordinator;
+@synthesize lableName,nameOfStop,lableCode,codeOfStop,stringForParse,parseString,codeWebView,textCodeView,url,stringCodeCheck,textForBus,fetchedResultsController,managedObjectContext,managedObjectModel,persistentStoreCoordinator,allStr,allVehicle;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    allStr = [NSString stringWithFormat:@""];
+    allVehicle = NO;
     AppDelegate* appDelegate  = [UIApplication sharedApplication].delegate;
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     lableName.text = nameOfStop;
     lableCode.text = codeOfStop;
-    NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?q="];
-    NSString *last = [NSString stringWithFormat:@"&o=1&go=1"];
-    NSString *busId = [NSString stringWithFormat:@"&vehicleTypeId=1"];
-    url = [NSString stringWithFormat:@"%@%@%@%@",first,codeOfStop,last,busId];
+    NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?stopCode="];
+    NSString *last = [NSString stringWithFormat:@"&o=0&go=0"];
+    url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
     [self getDataFrom:url];
- 
+
 }
 
 - (NSString *) getDataFrom:(NSString *)myUrl
@@ -56,10 +57,19 @@
     
     [request setHTTPMethod:@"GET"];
     [request setURL:[NSURL URLWithString:myUrl]];
+    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
+    BusClass * busData = [[appDelegate1  getCookies] firstObject];
+    //if(busData.captcha == NULL){
     
+    //NSLog(@"coookie :%@",busData.captcha);
+    if(busData.captcha != NULL){
+        //NSString * allCookies = [NSString stringWithFormat:@"%@; %@",self.cookieMonster,busData.captcha];
+        //[request setValue:busData.captcha forHTTPHeaderField:@"Set-Cookie"];
+    }
+    //NSLog(@"ress :%@",request.allHTTPHeaderFields);
+
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
-    
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if ([response statusCode] != 200) {
@@ -69,18 +79,19 @@
     }
     
     self.cookieMonster = response.allHeaderFields[@"Set-Cookie"];
-    
+    //NSLog(@"boom :%@",response.allHeaderFields);
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
    
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
-        
-        [self postDataFrom:url];
+
+        [self postDataFrom:url:3];
         
        
     } else {
         self.textForBus.hidden=YES;
+
         if ([parseString[2] rangeOfString:@"/captcha"].location != NSNotFound) {
            
             stringForParse=[parseString[2] substringToIndex:41];
@@ -89,11 +100,15 @@
             stringCodeCheck = [stringForParse  substringFromIndex:9];
             NSURL *urlAdress = [NSURL URLWithString:myUrl];
             NSURLRequest *requestObj = [NSURLRequest requestWithURL:urlAdress];
+
             [codeWebView loadRequest:requestObj];
             
         }
-       
     }
+        
+//    }else {
+//        [self postDataFrom:url];
+//    }
     
     return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
 }
@@ -101,39 +116,58 @@
     [textCodeView resignFirstResponder];
 }
 - (IBAction)checkButton:(id)sender {
-    [self postDataFrom:url];
+    [self postDataFrom:url:3];
     
 }
 
-- (NSString *) postDataFrom:(NSString *)myUrl
+- (NSString *) postDataFrom:(NSString *)myUrl :(int)idVehicle
 {
     NSMutableURLRequest *request = [[ NSMutableURLRequest alloc] init];
     
     [request setHTTPMethod:@"POST"];
     [request setURL:[NSURL URLWithString:myUrl]];
-    
     assert(self.cookieMonster.length);
     [request setValue:self.cookieMonster forHTTPHeaderField:@"Set-Cookie"];
+    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
+    if([appDelegate1 getCookies] != NULL){
+    BusClass * busData = [[appDelegate1  getCookies] firstObject];
+    //NSLog(@"coookie :%@",busData.captcha);
+        if(busData.captcha != NULL){
+            NSString * allCookies = [NSString stringWithFormat:@"%@; %@",busData.captcha,self.cookieMonster];
+            [request setValue:allCookies forHTTPHeaderField:@"Set-Cookie"];
+        }
+    }
+    //NSLog(@"ress :%@",request.allHTTPHeaderFields);
+
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
     
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
     if([response statusCode] != 200){
         NSLog(@"Error getting %@, HTTP status code %li", myUrl, (long)[response statusCode]);
         return nil;
     }
     self.cookieMonster = response.allHeaderFields[@"Set-Cookie"];
     
+    //NSLog(@"ress :%@",response.allHeaderFields);
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
     
     
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
-    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
         NSLog(@"sec go");
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"go":@"1"};
+        
+        NSDictionary *myRequest = @{@"o":@"1",@"go":@"1",@"stopCode":codeOfStop/*,@"vehicleTypeId":@"1"*/,@"sec":@"5"};
+        
+        if(idVehicle == 0){
+            myRequest = @{@"o":@"1",@"go":@"1",@"stopCode":codeOfStop,@"vehicleTypeId":@"0",@"sec":@"5"};
+        } else if (idVehicle == 1){
+            myRequest = @{@"o":@"1",@"go":@"1",@"stopCode":codeOfStop,@"vehicleTypeId":@"1",@"sec":@"5"};
+        } else if (idVehicle == 2){
+            myRequest = @{@"o":@"1",@"go":@"1",@"stopCode":codeOfStop,@"vehicleTypeId":@"2",@"sec":@"5"};
+        }
+        
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -141,81 +175,12 @@
                 NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
                 //NSLog(@"Hpple :%@",operation.responseString);
                 
+                
                 TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
                 
-                NSArray * elements  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']"];
-                NSArray * elements1  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']/a/b"];
                 
-                NSString *allStr = [NSString stringWithFormat:@""];
-                for(int attr = 0;attr<elements.count;attr++){
-                    TFHppleElement * element = [elements objectAtIndex:attr];
-                    TFHppleElement * element1 = [elements1 objectAtIndex:attr];
-                    if([element1 text] != NULL){
-                        NSString* delStr = [[element1 text] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-                        allStr = [NSString stringWithFormat:@"%@%@",allStr,delStr];
-                    }
-                    NSArray * elementChild = [element children];
-                    for(int attr = 0;attr<elementChild.count;attr++){
-                        TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
-                        if([elementCh content] != NULL){
-                            NSString *deleteChar = [elementCh content];
-                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" " withString:@""];
-                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" - \n" withString:@""];
-                            allStr = [NSString stringWithFormat:@"%@%@",allStr,deleteChar];
-                        }
-                        //                NSLog(@"a :%@",[element tagName]);                     // "a"
-                        //                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
-                        //                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
-                        //                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
-                    }
-                    allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
-                }
-                NSLog(@"all :%@",allStr);
-                allStr = [NSString stringWithFormat:@"Автобуси\n\n%@",allStr];
+                [self takeInfo:operation.responseString :stopsParser];
                 
-                textForBus.text = [NSString stringWithFormat:@"%@",allStr];
-                
-                NSString *stopsXpathQueryString = @"//div[starts-with(class,'arr_title_1')]";
-                NSString *infoXpathQueryString = @"//div[contains(string(@class),'arr_info_1')]";
-                
-                NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
-                NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
-                //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
-                
-                NSMutableArray *arrForUser = nil;
-                arrForUser = [[NSMutableArray alloc] init];
-                NSMutableArray *arrInfoForUser = nil;
-                arrInfoForUser = [[NSMutableArray alloc] init];
-                for (TFHppleElement *element in stopsNodes) {
-                    Tutorial *transportStop = [[Tutorial alloc] init];
-                    transportStop.title = [[element firstChild] content];
-                    stringForParse = transportStop.title;
-                    [arrForUser addObject:stringForParse];
-                    
-                }
-                for (TFHppleElement *element in infoNodes) {
-                    Tutorial *transportStop = [[Tutorial alloc] init];
-                    transportStop.title = [[element firstChild] content];
-                    stringForParse = transportStop.title;
-                    [arrInfoForUser addObject:stringForParse];
-                    
-                }
-                int a = 0;
-                for(NSString * str in arrForUser){
-                    NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
-                    NSString *myString = [arrForUser objectAtIndex:a];
-                    textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
-                    a++;
-                    
-                }
-
-                int b = 0;
-                for(NSString * str in arrInfoForUser){
-                    //NSLog(@"Array1 %d: %@",b,[arrInfoForUser objectAtIndex:b]);
-                    b++;
-                    
-                }
-                [textCodeView resignFirstResponder];
                 
             } else {
                 textForBus.text = @"В момента нямаме информация. Моля, опитайте по-късно.";
@@ -225,110 +190,187 @@
         }];
     } else {
         NSLog(@"first go");
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSDictionary *myRequest = @{@"q":codeOfStop,@"o":@"1",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"};
+        NSDictionary *myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"/*,@"vehicleTypeId":@"1"*/};
+        
+        
+        if(idVehicle == 0){
+            myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1",@"vehicleTypeId":@"0"};
+        } else if (idVehicle == 1){
+            myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1",@"vehicleTypeId":@"1"};
+        } else if (idVehicle == 2){
+            myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1",@"vehicleTypeId":@"2"};
+        }
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             self.textForBus.hidden = NO;
             
             if([operation.responseString rangeOfString:@"момента нямаме информация"].location == NSNotFound){
             NSData *stopsHtmlData = [operation.responseString dataUsingEncoding:NSUTF8StringEncoding];
-
-            TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
+                //NSLog(@"Hpple :%@",operation.responseString);
+                
+                TFHpple *stopsParser = [TFHpple hppleWithHTMLData:stopsHtmlData];
+                
+                [self takeInfo:operation.responseString :stopsParser];
+                
             
-                NSArray * elements  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']"];
-                NSArray * elements1  = [stopsParser searchWithXPathQuery:@"//div[@class='arr_info_1']/a/b"];
-                
-                NSString *allStr = [NSString stringWithFormat:@""];
-                for(int attr = 0;attr<elements.count;attr++){
-                TFHppleElement * element = [elements objectAtIndex:attr];
-                TFHppleElement * element1 = [elements1 objectAtIndex:attr];
-                    if([element1 text] != NULL){
-                        NSString* delStr = [[element1 text] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
-                        allStr = [NSString stringWithFormat:@"%@%@",allStr,delStr];
-                    }
-                NSArray * elementChild = [element children];
-                    for(int attr = 0;attr<elementChild.count;attr++){
-                        TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
-                        if([elementCh content] != NULL){
-                            NSString *deleteChar = [elementCh content];
-                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" " withString:@""];
-                            deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" - \n" withString:@""];
-                            allStr = [NSString stringWithFormat:@"%@%@",allStr,deleteChar];
-                        }
-//                NSLog(@"a :%@",[element tagName]);                     // "a"
-//                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
-//                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
-//                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
-                }
-                    allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
-                }
-                NSLog(@"all :%@",allStr);
-                allStr = [NSString stringWithFormat:@"Автобуси\n\n%@",allStr];
-                
-                textForBus.text = [NSString stringWithFormat:@"%@",allStr];
-                
-            NSString *stopsXpathQueryString = @"//div[starts-with(class,'arr_title_1')]";
-            NSString *infoXpathQueryString = @"//div[contains(string(@class),'arr_info_1')]";
-
-            NSArray *stopsNodes = [stopsParser searchWithXPathQuery:stopsXpathQueryString];
-            NSArray *infoNodes = [stopsParser searchWithXPathQuery:infoXpathQueryString];
-            //NSLog(@"info: %@\n titile: %@",infoNodes,stopsNodes);
-            
-            NSMutableArray *arrForUser = nil;
-            arrForUser = [[NSMutableArray alloc] init];
-            NSMutableArray *arrInfoForUser = nil;
-            arrInfoForUser = [[NSMutableArray alloc] init];
-            for (TFHppleElement *element in stopsNodes) {
-                Tutorial *transportStop = [[Tutorial alloc] init];
-                transportStop.title = [[element firstChild] content];
-                stringForParse = transportStop.title;
-                [arrForUser addObject:stringForParse];
-                
             }
-            for (TFHppleElement *element in infoNodes) {
-                Tutorial *transportStop = [[Tutorial alloc] init];
-                transportStop.title = [[element firstChild] content];
-                stringForParse = transportStop.title;
-                [arrInfoForUser addObject:stringForParse];
-                
-            }
-            int a = 0;
-            for(NSString * str in arrForUser){
-                NSLog(@"Array %d: %@",a,[arrForUser objectAtIndex:a]);
-                NSString *myString = [arrForUser objectAtIndex:a];
-                textForBus.text = [NSString stringWithFormat:@"%@ %@",textForBus.text,myString];
-                a++;
-                
-            }
-            [textCodeView resignFirstResponder];
-         
-            } else {
+            else {
                 textForBus.text = @"В момента нямаме информация. Моля, опитайте по-късно.";
                 [textCodeView resignFirstResponder];
             }
         }];
-        
     }
     
+    
+    NSMutableArray * mutableArrCookie = [[NSMutableArray alloc] init];
+    NSMutableArray * nullArr = [[NSMutableArray alloc] init];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [mutableArrCookie addObjectsFromArray:[appDelegate  getCookies]];
+    if([mutableArrCookie isEqualToArray:nullArr]){
+    NSURL *urlNS = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:urlNS];
+    for (NSHTTPCookie *cookie in cookies)
+    {
+        //NSLog(@"cookieee :%@", [cookie.properties objectForKey:@"Value"]);
+        BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"CookieMonster"
+                                                            inManagedObjectContext:self.managedObjectContext];
+        
+        newEntry.captcha = [NSString stringWithFormat:@"alpocjengi=%@",[cookie.properties objectForKey:@"Value"]];
+        //NSLog(@"newwww :%@",newEntry.captcha);
+        NSError *error;
+        
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    }
+    
+    }
+
     return [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
+    
+}
+-(void)takeInfo:(NSString *)arr_info :(TFHpple *)stopsParser{
+    NSString *arrInfoString;
+    NSString *nameString;
+    if ([arr_info rangeOfString:@"arr_info_0"].location == NSNotFound) {
+        if ([arr_info rangeOfString:@"arr_info_1"].location == NSNotFound) {
+            if ([arr_info rangeOfString:@"arr_info_2"].location == NSNotFound) {
+                arrInfoString = [NSString stringWithFormat:@""];
+            } else {
+                arrInfoString = [NSString stringWithFormat:@"arr_info_2"];
+                nameString = [NSString stringWithFormat:@"Тролеи"];
+                if(allVehicle == NO){
+                    allVehicle = YES;
+                    //allStr = [NSString stringWithFormat:@"%@\n\n%@",nameString,allStr];
+
+                    if ([arr_info rangeOfString:@"Автобуси"].location != NSNotFound) {
+                        //[self postDataFrom:url:0];
+                        [self postDataFrom:url:1];
+                    }
+                    if ([arr_info rangeOfString:@"Трамваи"].location != NSNotFound) {
+                        [self postDataFrom:url:0];
+                        //[self postDataFrom:url:1];
+                    }
+                }
+            }
+        } else {
+            arrInfoString = [NSString stringWithFormat:@"arr_info_1"];
+            nameString = [NSString stringWithFormat:@"Автобуси"];
+            if(allVehicle == NO){
+                allVehicle = YES;
+                //allStr = [NSString stringWithFormat:@"%@\n\n%@",nameString,allStr];
+
+                if ([arr_info rangeOfString:@"Тролеи"].location != NSNotFound) {
+                    //[self postDataFrom:url:0];
+                    [self postDataFrom:url:2];
+                }
+                if ([arr_info rangeOfString:@"Трамваи"].location != NSNotFound) {
+                    [self postDataFrom:url:0];
+                    //[self postDataFrom:url:1];
+                }
+                
+                
+            }
+
+        }
+    } else {
+        arrInfoString = [NSString stringWithFormat:@"arr_info_0"];
+        nameString = [NSString stringWithFormat:@"Трамваи"];
+        if(allVehicle == NO){
+            allVehicle = YES;
+            //allStr = [NSString stringWithFormat:@"%@\n\n%@",nameString,allStr];
+
+            if ([arr_info rangeOfString:@"Автобуси"].location != NSNotFound) {
+                //[self postDataFrom:url:0];
+                [self postDataFrom:url:1];
+            }
+            if ([arr_info rangeOfString:@"Тролеи"].location != NSNotFound) {
+                [self postDataFrom:url:2];
+                //[self postDataFrom:url:1];
+            }
+            
+            
+        }
+
+    }
+    allStr = [NSString stringWithFormat:@"%@\n%@\n\n",allStr,nameString];
+
+    if(nameString == NULL){
+        nameString = [NSString stringWithFormat:@"В момента няма информация"];
+    }
+    
+    NSString * query = [NSString stringWithFormat:@"//div[@class='%@']",arrInfoString];
+    NSString * query1 = [NSString stringWithFormat:@"//div[@class='%@']/a/b",arrInfoString];
+
+    NSArray * elements  = [stopsParser searchWithXPathQuery:query];
+    NSArray * elements1  = [stopsParser searchWithXPathQuery:query1];
+    
+   
+    
+    for(int attr = 0;attr<elements.count;attr++){
+        TFHppleElement * element = [elements objectAtIndex:attr];
+        TFHppleElement * element1 = [elements1 objectAtIndex:attr];
+        
+        if([element1 text] != NULL){
+            NSString* delStr = [[element1 text] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            allStr = [NSString stringWithFormat:@"%@%@",allStr,delStr];
+        }
+        NSArray * elementChild = [element children];
+        for(int attr = 0;attr<elementChild.count;attr++){
+            TFHppleElement * elementCh = [elementChild objectAtIndex:attr];
+            if([elementCh content] != NULL){
+                NSString *deleteChar = [elementCh content];
+                deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" " withString:@""];
+                deleteChar = [deleteChar stringByReplacingOccurrencesOfString:@" - \n" withString:@""];
+                allStr = [NSString stringWithFormat:@"%@%@",allStr,deleteChar];
+            }
+            //                NSLog(@"a :%@",[element tagName]);                     // "a"
+            //                NSLog(@"attr :%@",[element attributes]);               // NSDictionary of href, class, id, etc.
+            //                NSLog(@"href :%@",[element objectForKey:@"href"]);      // Easy access to single attribute
+            //                NSLog(@"b :%@",[element firstChildWithTagName:@"b"]);  // The first "b" child node
+        }
+        allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
+    }
+    textForBus.text = [NSString stringWithFormat:@"%@",allStr];
+    
+    [textCodeView resignFirstResponder];
     
 }
 
 -(NSString*) getStringForTFHppleElement:(TFHppleElement *)element {
     
     NSMutableString *result = [NSMutableString new];
-    NSLog(@"?? :%@",element);
+    //NSLog(@"?? :%@",element);
     // Iterate recursively through all children
     for (TFHppleElement *child in [element children]) {
         [result appendString:[self getStringForTFHppleElement:child]];
-        NSLog(@"shit :%@",result);
+        //NSLog(@"shit :%@",result);
     }
     
     // Hpple creates a <text> node when it parses texts
     if ([element.tagName isEqualToString:@"text"]){
         [result appendString:element.content];
-        NSLog(@"res :%@",result);
+        //NSLog(@"res :%@",result);
     }
     
     return result;
@@ -345,8 +387,6 @@
         
         NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"BusData" inManagedObjectContext:self.managedObjectContext];
         
-        // If appropriate, configure the new managed object.
-        // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
         [newManagedObject setValue:self.lableName.text forKey:@"name"];
         [newManagedObject setValue:self.lableCode.text forKey:@"code"];
 
@@ -370,7 +410,7 @@
     int checkEqual=0;
     for (int a=0;a<mutableArr.count;a++){
     BusClass * busData = [mutableArr objectAtIndex:a];
-    NSLog(@"arr :%@",busData.name);
+    //NSLog(@"arr :%@",busData.name);
         if([busData.name isEqualToString:self.lableName.text]){
             if([busData.code isEqualToString:self.lableCode.text])
             checkEqual = 1;

@@ -16,5 +16,9 @@
 @dynamic loadCode;
 @dynamic latitude;
 @dynamic longitude;
+@dynamic captcha;
+@dynamic captchaCode;
+
+
 
 @end
