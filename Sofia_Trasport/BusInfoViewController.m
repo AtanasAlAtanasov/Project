@@ -124,7 +124,7 @@
 {
     NSMutableURLRequest *request = [[ NSMutableURLRequest alloc] init];
     
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:@"GET"];
     [request setURL:[NSURL URLWithString:myUrl]];
     assert(self.cookieMonster.length);
     [request setValue:self.cookieMonster forHTTPHeaderField:@"Set-Cookie"];
@@ -137,6 +137,8 @@
             [request setValue:allCookies forHTTPHeaderField:@"Set-Cookie"];
         }
     }
+    
+    
     //NSLog(@"ress :%@",request.allHTTPHeaderFields);
 
     NSError *error = [[NSError alloc] init];
