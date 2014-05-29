@@ -15,29 +15,38 @@
 #import "BusClass.h"
 #import "AppDelegate.h"
 
-@interface ViewController ()
+@interface ViewController () {
+    NSArray *places;
+    CLLocationDegrees zoomLevel;
+}
 @property (nonatomic,strong)NSMutableArray* fetchedRecordsArrayStops;
+@property (nonatomic,strong) NSMutableArray * busStops;
+
 
 @end
 
 @implementation ViewController
 
-@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager,managedObjectContext,fetchedRecordsArrayStops,fetchedResultsController,managedObjectModel,persistentStoreCoordinator;
+@synthesize stringForParse,parseStings,stopsInfo,latitude,longitude,stopName,stopCode,myPinView,myCurLatitude,myCurLongitude,locationManager,managedObjectContext,fetchedRecordsArrayStops,fetchedResultsController,managedObjectModel,persistentStoreCoordinator,busStops;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     AppDelegate* appDelegate  = [UIApplication sharedApplication].delegate;
     self.managedObjectContext = appDelegate.managedObjectContext;
-    
+    busStops = [[NSMutableArray alloc] init];
     self.fetchedRecordsArrayStops = [[NSMutableArray alloc] init];
     [self.fetchedRecordsArrayStops addObjectsFromArray:[appDelegate getAllBusStops]];
     
     self.MapContorller.delegate=self;
     //[self loadStops];
     locationManager = [[CLLocationManager alloc] init];
-    [locationManager startUpdatingLocation];
+    self.MapContorller.showsUserLocation = YES;
     
+    [locationManager startMonitoringSignificantLocationChanges];
+    [locationManager startUpdatingHeading];
+    [locationManager startUpdatingLocation];
+
     NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
     NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
     
@@ -47,7 +56,7 @@
     regionUser.span.latitudeDelta = 0.01f;
     regionUser.span.longitudeDelta = 0.01f;
     self.MapContorller.showsUserLocation = YES;
-    [self.MapContorller setRegion:regionUser animated:NO];
+    
     [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:NO];
     
     if([self.fetchedRecordsArrayStops count] != 0){
@@ -57,6 +66,11 @@
             [self loadStops];
         } else {
             [self makePinCoreData];
+            [self filterAnnotations:busStops];
+
+            //[self.MapContorller showAnnotations:busStops animated:NO];
+            //[self.MapContorller setRegion:regionUser animated:NO];
+
         }
     } else if (loadTest == nil) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Няма връска с интернет!" message:@"Не може да бъде установена връска с интернет."  delegate:self cancelButtonTitle:@"Добре" otherButtonTitles: @"Презареждане", nil];
@@ -80,6 +94,11 @@
                 [self loadStops];
             } else {
                 [self makePinCoreData];
+                [self filterAnnotations:busStops];
+
+                //[self.MapContorller showAnnotations:busStops animated:NO];
+
+
             }
         } else if (loadTest == nil) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Няма връска с интернет!" message:@"Не може да бъде установена връска с интернет."  delegate:self cancelButtonTitle:@"Добре" otherButtonTitles: @"Презареждане", nil];
@@ -89,6 +108,43 @@
         }
     }
 }
+
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    if (zoomLevel!=mapView.region.span.longitudeDelta) {
+        [self filterAnnotations:busStops];
+        zoomLevel=mapView.region.span.longitudeDelta;
+    }
+}
+
+
+-(void)filterAnnotations:(NSArray *)placesToFilter{
+    float latDelta=self.MapContorller.region.span.latitudeDelta/54.0;
+    float longDelta=self.MapContorller.region.span.longitudeDelta/66.0;
+    NSMutableArray *shopsToShow=[[NSMutableArray alloc] initWithCapacity:0];
+    
+    for (int i=0; i<[placesToFilter count]; i++) {
+        PinClass *checkingLocation=[placesToFilter objectAtIndex:i];
+        CLLocationDegrees latitude2 = checkingLocation.coordinate.latitude;
+        CLLocationDegrees longitude2 = checkingLocation.coordinate.longitude;
+        
+        bool found=FALSE;
+        for (PinClass *tempPlacemark in shopsToShow) {
+            if(fabs(tempPlacemark.coordinate.latitude-latitude2) < latDelta && fabs(tempPlacemark.coordinate.longitude-longitude2)<longDelta ){
+                [self.MapContorller removeAnnotation:checkingLocation];
+                found=TRUE;
+                [tempPlacemark addPlace:checkingLocation];
+                break;
+            }
+        }
+        if (!found) {
+            [shopsToShow addObject:checkingLocation];
+            [self.MapContorller addAnnotation:checkingLocation];
+        }
+        
+    }
+}
+
 
 - (IBAction)myLocation:(id)sender {
     
@@ -131,6 +187,7 @@
             
             [self makePin];
             
+            
         }
     }
     MKCoordinateRegion regionUser;
@@ -141,7 +198,8 @@
     self.MapContorller.showsUserLocation = YES;
     [self.MapContorller setRegion:regionUser animated:YES];
     [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:YES];
-    
+    [self.MapContorller showAnnotations:busStops animated:NO];
+    self.MapContorller.camera.altitude *=1.4;
     
 }
 
@@ -206,13 +264,13 @@
         }
         ann.subtitle =[NSString stringWithFormat:@"%@%@",zeros,stopCode];
 
-
-    
-    [self.MapContorller addAnnotation:ann];
-        
+        [busStops addObject:ann];
+        //[self.MapContorller addAnnotation:ann];
+        //[self.MapContorller removeAnnotation:ann];
     }
     
 }
+
 
 -(void)makePin {
 
@@ -230,8 +288,7 @@
     PinClass *ann = [[PinClass alloc] init];
     ann.coordinate = region.center;
     ann.title = stopName;
-    //NSString * zeros = @"00000";
-    //NSLog(@"len :%lu",(unsigned long)stopCode.length);
+    
     NSString *zeros = @"";
     if(stopCode.length==1){
         zeros = @"000";
@@ -258,7 +315,9 @@
     }
     
     [self.view endEditing:YES];
-    [self.MapContorller addAnnotation:ann];
+    [busStops addObject:ann];
+    //NSLog(@"bus :%@",busStops);
+    //[self.MapContorller addAnnotation:ann];
 
 }
 
@@ -267,7 +326,13 @@
     BusInfoViewController * busView = [self.storyboard instantiateViewControllerWithIdentifier:@"busViewController"];
     busView.nameOfStop = view.annotation.title;
     busView.codeOfStop = view.annotation.subtitle;
+    self.MapContorller.showsUserLocation = NO;
+    
+    [locationManager stopMonitoringSignificantLocationChanges];
+    [locationManager stopUpdatingLocation];
+    
     [self presentModalViewController:busView animated:YES];
+    
 
 }
 
@@ -281,7 +346,6 @@
     myCurLongitude = newLocation.coordinate.longitude;
 
 }
-
 
 
 - (void)didReceiveMemoryWarning

@@ -11,4 +11,8 @@
 @implementation PinClass
 @synthesize coordinate,title,subtitle;
 
+
+-(void)addPlace:(PinClass *)place{
+    [places addObject:places];
+}
 @end

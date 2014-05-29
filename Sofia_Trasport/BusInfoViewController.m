@@ -37,9 +37,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
     allStr = [NSString stringWithFormat:@""];
     allVehicle = NO;
     AppDelegate* appDelegate  = [UIApplication sharedApplication].delegate;
+
     self.managedObjectContext = appDelegate.managedObjectContext;
     
     lableName.text = nameOfStop;
