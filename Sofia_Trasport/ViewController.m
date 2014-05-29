@@ -41,6 +41,15 @@
     NSURL *urlConnected = [NSURL URLWithString:@"https://www.google.bg/"];
     NSData *loadTest   = [NSData dataWithContentsOfURL:urlConnected];
     
+    MKCoordinateRegion regionUser;
+    regionUser.center.latitude = myCurLatitude;
+    regionUser.center.longitude = myCurLongitude;
+    regionUser.span.latitudeDelta = 0.01f;
+    regionUser.span.longitudeDelta = 0.01f;
+    self.MapContorller.showsUserLocation = YES;
+    [self.MapContorller setRegion:regionUser animated:NO];
+    [self.MapContorller setUserTrackingMode:MKUserTrackingModeFollowWithHeading animated:NO];
+    
     if([self.fetchedRecordsArrayStops count] != 0){
         
         BusClass * busData = [self.fetchedRecordsArrayStops objectAtIndex:3];
@@ -173,8 +182,8 @@
 
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
-    myCurLatitude = myLatitude;
-    myCurLongitude = myLongitude;
+    //myCurLatitude = myLatitude;
+    //myCurLongitude = myLongitude;
     
     MKCoordinateRegion region;
     region.center.latitude = myLatitude;
@@ -209,8 +218,8 @@
 
     double myLatitude = [latitude doubleValue];
     double myLongitude = [longitude doubleValue];
-    myCurLatitude = myLatitude;
-    myCurLongitude = myLongitude;
+    //myCurLatitude = myLatitude;
+    //myCurLongitude = myLongitude;
     
     MKCoordinateRegion region;
     region.center.latitude = myLatitude;

@@ -47,6 +47,7 @@
     NSString *first = [NSString stringWithFormat:@"http://m.sofiatraffic.bg/vt?stopCode="];
     NSString *last = [NSString stringWithFormat:@"&o=0&go=0"];
     url = [NSString stringWithFormat:@"%@%@%@",first,codeOfStop,last];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
     [self getDataFrom:url];
 
 }
@@ -57,20 +58,105 @@
     
     [request setHTTPMethod:@"GET"];
     [request setURL:[NSURL URLWithString:myUrl]];
-    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
-    BusClass * busData = [[appDelegate1  getCookies] firstObject];
-    //if(busData.captcha == NULL){
+//    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
+//    if([appDelegate1 getCookies] != NULL){
+//        BusClass * busData = [[appDelegate1  getCookies] lastObject];
+        //NSLog(@"coookie :%@",busData.captcha);
+//        if(busData.captcha != NULL){
+//            NSString * allCookies = [NSString stringWithFormat:@"%@; %@",busData.captcha,self.cookieMonster];
+//            //[request setValue:allCookies forHTTPHeaderField:@"Cookie"];
+//            [request setValue:allCookies forHTTPHeaderField:@"Cookie"];
+//            //alpocjengi=
+//            NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+//            [cookieProperties setObject:@"alpocjengi" forKey:NSHTTPCookieName];
+//            [cookieProperties setObject:busData.captcha forKey:NSHTTPCookieValue];
+//            [cookieProperties setObject:@"m.sofiatraffic.bg" forKey:NSHTTPCookieDomain];
+//            //[cookieProperties setObject:@"www.example.com" forKey:NSHTTPCookieOriginURL];
+//            [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+//            //[cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+//            
+//            //[cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+//            
+//            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+//            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+//            
+//        }
     
-    //NSLog(@"coookie :%@",busData.captcha);
-    if(busData.captcha != NULL){
-        //NSString * allCookies = [NSString stringWithFormat:@"%@; %@",self.cookieMonster,busData.captcha];
-        //[request setValue:busData.captcha forHTTPHeaderField:@"Set-Cookie"];
-    }
+    
+//    NSArray * availableCookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:myUrl]];
+//    NSDictionary * headers = [NSHTTPCookie requestHeaderFieldsWithCookies:availableCookies];
+//    //NSLog(@"head :%@, cookie :%@",headers,availableCookies);
+//    NSLog(@"single :%@",[headers objectForKey:@"Cookie"]);
+//    
+//    
+//    NSString *vjfmrii;
+//    vjfmrii = [headers objectForKey:@"Cookie"];
+//    if(vjfmrii.length > 50){
+//        vjfmrii = [[headers objectForKey:@"Cookie"] substringFromIndex:53];
+//    } else {
+//        vjfmrii = [headers objectForKey:@"Cookie"];
+//    }
+//    NSLog(@"vijj :%@",vjfmrii);
+//    NSMutableArray * mutableArrCookie = [[NSMutableArray alloc] init];
+//    NSMutableArray * nullArr = [[NSMutableArray alloc] init];
+//    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+//    [mutableArrCookie addObjectsFromArray:[appDelegate  getCookies]];
+//    if([headers objectForKey:@"Cookie"]!=NULL){
+//        
+//        NSLog(@"check");
+//        BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"CookieMonster"
+//                                                                    inManagedObjectContext:self.managedObjectContext];
+//        if([mutableArrCookie isEqualToArray:nullArr]){
+//            
+//            NSString *alpocjengi = [[headers objectForKey:@"Cookie"] substringToIndex:51];
+//            newEntry.captcha = alpocjengi;
+//            NSLog(@"newwww :%@",newEntry.captcha);
+//            NSError *error;
+//                
+//            if (![self.managedObjectContext save:&error]) {
+//                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//            }
+//        }
+//        
+//        
+//    }
+//    BusClass * busData = [[appDelegate  getCookies] lastObject];
+//    if(busData.captcha != NULL){
+//        NSLog(@"strange :%@, head :%@",busData.captcha,headers);
+//        
+//        NSMutableDictionary *newHeader = [[NSMutableDictionary alloc]init];
+//        NSString * newHeaderString = [NSString stringWithFormat:@"%@; %@",busData.captcha,vjfmrii];
+//        [newHeader setObject:newHeaderString forKey:@"Cookie"];
+//        
+//        [request setAllHTTPHeaderFields:newHeader];
+//        NSLog(@"single :%@",newHeader);
+//
+//    }
+    
+    //}
     //NSLog(@"ress :%@",request.allHTTPHeaderFields);
+    
+//    for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+//    {
+//        NSLog(@"name: '%@'\n",   [cookie name]);
+//        NSLog(@"value: '%@'\n",  [cookie value]);
+//        NSLog(@"domain: '%@'\n", [cookie domain]);
+//        NSLog(@"path: '%@'\n",   [cookie path]);
+//    }
 
+    
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+//    for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+//    {
+//        NSLog(@"name: '%@'\n",   [cookie name]);
+//        NSLog(@"value: '%@'\n",  [cookie value]);
+//        NSLog(@"domain: '%@'\n", [cookie domain]);
+//        NSLog(@"path: '%@'\n",   [cookie path]);
+//    }
+
     
     if ([response statusCode] != 200) {
         NSLog(@"Error getting %@, HTTP status code %li", myUrl, (long)[response statusCode]);
@@ -79,9 +165,12 @@
     }
     
     self.cookieMonster = response.allHeaderFields[@"Set-Cookie"];
+    
+    
     //NSLog(@"boom :%@",response.allHeaderFields);
     stringForParse = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-   
+    //NSLog(@"res :%@",stringForParse);
+
     parseString = [stringForParse componentsSeparatedByString:@"src=""\""];
     
     if ([parseString[1] rangeOfString:@"символите от"].location == NSNotFound) {
@@ -124,25 +213,38 @@
 {
     NSMutableURLRequest *request = [[ NSMutableURLRequest alloc] init];
     
-    [request setHTTPMethod:@"GET"];
+    [request setHTTPMethod:@"POST"];
     [request setURL:[NSURL URLWithString:myUrl]];
     assert(self.cookieMonster.length);
     [request setValue:self.cookieMonster forHTTPHeaderField:@"Set-Cookie"];
-    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
-    if([appDelegate1 getCookies] != NULL){
-    BusClass * busData = [[appDelegate1  getCookies] firstObject];
-    //NSLog(@"coookie :%@",busData.captcha);
-        if(busData.captcha != NULL){
-            NSString * allCookies = [NSString stringWithFormat:@"%@; %@",busData.captcha,self.cookieMonster];
-            [request setValue:allCookies forHTTPHeaderField:@"Set-Cookie"];
-        }
-    }
-    
-    
-    //NSLog(@"ress :%@",request.allHTTPHeaderFields);
-
+//    AppDelegate* appDelegate1 = [UIApplication sharedApplication].delegate;
+//    if([appDelegate1 getCookies] != NULL){
+//        BusClass * busData = [[appDelegate1  getCookies] lastObject];
+//        //NSLog(@"coookie :%@",busData.captcha);
+//        if(busData.captcha != NULL){
+//            NSString * allCookies = [NSString stringWithFormat:@"%@; %@",busData.captcha,self.cookieMonster];
+//            //[request setValue:allCookies forHTTPHeaderField:@"Cookie"];
+//            [request setValue:allCookies forHTTPHeaderField:@"Cookie"];
+//            //alpocjengi=
+//            NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+//            [cookieProperties setObject:@"alpocjengi" forKey:NSHTTPCookieName];
+//            [cookieProperties setObject:busData.captcha forKey:NSHTTPCookieValue];
+//            [cookieProperties setObject:@"m.sofiatraffic.bg" forKey:NSHTTPCookieDomain];
+//            //[cookieProperties setObject:@"www.example.com" forKey:NSHTTPCookieOriginURL];
+//            [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+//            //[cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+//            
+//            //[cookieProperties setObject:[[NSDate date] dateByAddingTimeInterval:2629743] forKey:NSHTTPCookieExpires];
+//            
+//            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+//            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+//            
+//        }
+//    }
+    //NSLog(@"logs :%@",request.allHTTPHeaderFields);
     NSError *error = [[NSError alloc] init];
     NSHTTPURLResponse *response = nil;
+
     
     NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     if([response statusCode] != 200){
@@ -192,7 +294,9 @@
         }];
     } else {
         NSLog(@"first go");
-        NSDictionary *myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"/*,@"vehicleTypeId":@"1"*/};
+        NSDictionary *myRequest;
+        if(stringCodeCheck != NULL){
+         myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1"/*,@"vehicleTypeId":@"1"*/};
         
         
         if(idVehicle == 0){
@@ -201,6 +305,17 @@
             myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1",@"vehicleTypeId":@"1"};
         } else if (idVehicle == 2){
             myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"poleicngi": stringCodeCheck,@"go":@"1",@"vehicleTypeId":@"2"};
+        }
+        } else {
+             myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text,@"go":@"1"};
+            if(idVehicle == 0){
+                myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"go":@"1",@"vehicleTypeId":@"0"};
+            } else if (idVehicle == 1){
+                myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"go":@"1",@"vehicleTypeId":@"1"};
+            } else if (idVehicle == 2){
+                myRequest = @{@"stopCode":codeOfStop,@"o":@"1",@"sec":@"5",@"sc": textCodeView.text ,@"go":@"1",@"vehicleTypeId":@"2"};
+            }
+
         }
         [manager POST:myUrl parameters:myRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -224,29 +339,7 @@
     }
     
     
-    NSMutableArray * mutableArrCookie = [[NSMutableArray alloc] init];
-    NSMutableArray * nullArr = [[NSMutableArray alloc] init];
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [mutableArrCookie addObjectsFromArray:[appDelegate  getCookies]];
-    if([mutableArrCookie isEqualToArray:nullArr]){
-    NSURL *urlNS = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:urlNS];
-    for (NSHTTPCookie *cookie in cookies)
-    {
-        //NSLog(@"cookieee :%@", [cookie.properties objectForKey:@"Value"]);
-        BusClass * newEntry = [NSEntityDescription insertNewObjectForEntityForName:@"CookieMonster"
-                                                            inManagedObjectContext:self.managedObjectContext];
-        
-        newEntry.captcha = [NSString stringWithFormat:@"alpocjengi=%@",[cookie.properties objectForKey:@"Value"]];
-        //NSLog(@"newwww :%@",newEntry.captcha);
-        NSError *error;
-        
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-    }
     
-    }
 
     return [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding];
     
@@ -254,6 +347,13 @@
 -(void)takeInfo:(NSString *)arr_info :(TFHpple *)stopsParser{
     NSString *arrInfoString;
     NSString *nameString;
+    
+    
+    if ([arr_info rangeOfString:@"/captcha"].location != NSNotFound) {
+        self.textForBus.hidden=YES;
+        [self getDataFrom:url];
+    }
+    
     if ([arr_info rangeOfString:@"arr_info_0"].location == NSNotFound) {
         if ([arr_info rangeOfString:@"arr_info_1"].location == NSNotFound) {
             if ([arr_info rangeOfString:@"arr_info_2"].location == NSNotFound) {
@@ -327,8 +427,6 @@
     NSArray * elements  = [stopsParser searchWithXPathQuery:query];
     NSArray * elements1  = [stopsParser searchWithXPathQuery:query1];
     
-   
-    
     for(int attr = 0;attr<elements.count;attr++){
         TFHppleElement * element = [elements objectAtIndex:attr];
         TFHppleElement * element1 = [elements1 objectAtIndex:attr];
@@ -353,7 +451,11 @@
         }
         allStr = [NSString stringWithFormat:@"%@\n\n",allStr];
     }
-    textForBus.text = [NSString stringWithFormat:@"%@",allStr];
+    if ([allStr rangeOfString:@"(null)"].location != NSNotFound) {
+        textForBus.text = [NSString stringWithFormat:@"В момента нямаме информация."];
+    } else {
+        textForBus.text = [NSString stringWithFormat:@"%@",allStr];
+    }
     
     [textCodeView resignFirstResponder];
     
@@ -377,7 +479,7 @@
     
     return result;
 }
-
+//
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
