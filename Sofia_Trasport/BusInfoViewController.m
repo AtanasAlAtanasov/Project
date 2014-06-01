@@ -460,28 +460,50 @@
         textForBus.text = [NSString stringWithFormat:@"%@",allStr];
     }
     
+    [self.textForBus setTextAlignment:NSTextAlignmentCenter];
+
+    NSMutableAttributedString * string = [[NSMutableAttributedString alloc]initWithString:self.textForBus.text];
+    
+    NSArray *words=[self.textForBus.text componentsSeparatedByString:@"\n"];
+    
+    int colorChange;
+    for (NSString *word in words) {
+        //NSLog(@"word :%@",word);
+        if ([word hasPrefix:@"Авто"]) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:25] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+            colorChange = 0;
+        } else if ([word hasPrefix:@"Троле"]) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:25] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:range];
+            colorChange = 1;
+        } else if ([word hasPrefix:@"Трам"]) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:25] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor purpleColor] range:range];
+            colorChange = 2;
+        } else if (colorChange == 0) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:18] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+        } else if (colorChange == 1) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:18] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:range];
+        } else if (colorChange == 2) {
+            NSRange range=[self.textForBus.text rangeOfString:word];
+            [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial" size:18] range:range];
+            [string addAttribute:NSForegroundColorAttributeName value:[UIColor purpleColor] range:range];
+        }
+    }
+    [self.textForBus setAttributedText:string];
+    
     [textCodeView resignFirstResponder];
     
 }
 
--(NSString*) getStringForTFHppleElement:(TFHppleElement *)element {
-    
-    NSMutableString *result = [NSMutableString new];
-    //NSLog(@"?? :%@",element);
-    // Iterate recursively through all children
-    for (TFHppleElement *child in [element children]) {
-        [result appendString:[self getStringForTFHppleElement:child]];
-        //NSLog(@"shit :%@",result);
-    }
-    
-    // Hpple creates a <text> node when it parses texts
-    if ([element.tagName isEqualToString:@"text"]){
-        [result appendString:element.content];
-        //NSLog(@"res :%@",result);
-    }
-    
-    return result;
-}
 //
 - (void)didReceiveMemoryWarning
 {
